@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('tanggal_transaksi');
             $table->integer('total');
             $table->integer('poin_diperoleh');
+            $table->integer('poin_ditukar')->nullable();
             $table->timestamps();
         });
     }

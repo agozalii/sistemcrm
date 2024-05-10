@@ -51,6 +51,16 @@ class TransaksiController extends Controller
         return view('admin.modal.addTransaksi', compact('users'));
     }
 
+    public function getPoin(Request $request)
+    {
+
+        $id_user = $request->input('id_user');
+
+        $user = User::findOrFail($id_user);
+
+        return $user->poin;
+    }
+
     /** Store a newly created resource in storage. */
     // public function store(StoreTransaksiRequest $request)
     // {
@@ -154,7 +164,6 @@ class TransaksiController extends Controller
                 'nama_pelanggan' => 'required',
                 'tanggal_transaksi' => 'required',
                 'total_transaksi' => 'required|numeric',
-                // 'poin_diperoleh' => 'required|numeric',
                 'produk_id' => 'required|array',
                 'jumlah_beli_produk' => 'required|array',
             ]);
@@ -165,6 +174,17 @@ class TransaksiController extends Controller
             }
 
 
+            $total_transaksi = $request->total_transaksi;
+
+            if ($request->poin_ditukar != null || $request->poin_ditukar != 0) {
+                $total_transaksi = $total_transaksi - $request->poin_ditukar;
+
+                $user = User::where('id', $request->nama_pelanggan)->first();
+                if ($user->poin != null || $user->poin != 0) {
+                    $user->poin = $user->poin - $request->poin_ditukar;
+                }
+                $user->save();
+            }
 
             // Buat nomor order
             $no_order = 'NT-' . date('Ymd') . '-' . rand(100, 999);
@@ -174,10 +194,11 @@ class TransaksiController extends Controller
             $transaksi->id = $no_order;
             $transaksi->user_id = $request->nama_pelanggan;  // Gunakan nama pelanggan yang dipilih
             $transaksi->tanggal_transaksi = $request->tanggal_transaksi;
-            $transaksi->total = $request->total_transaksi;
+            $transaksi->total = $total_transaksi;
 
-            $point = $request->total_transaksi / 100;
+            $point = $total_transaksi / 100;
             $transaksi->poin_diperoleh = $point;
+            $transaksi->poin_ditukar = $request->poin_ditukar;
 
             // Hitung total poin dari transaksi
             // $totalPoin = $request->poin_diperoleh;
@@ -186,6 +207,9 @@ class TransaksiController extends Controller
             // $transaksi->total_poin = $totalPoin;
 
             $transaksi->save();
+
+            // Hitung total poin dari transaksi
+
 
             foreach ($request->produk_id as $key => $value) {
                 $produk = ProdukModels::findOrFail($value);
@@ -198,13 +222,15 @@ class TransaksiController extends Controller
                 $detailTransaksi->save();
             }
 
+
+
             // Hitung total poin dari transaksi
             $user = User::where('id', $request->nama_pelanggan)->first();
-            if($user->poin == null || $user->poin == 0){
+            if ($user->poin == null || $user->poin == 0) {
                 $user->poin = $transaksi->poin_diperoleh;
-             }else{
+            } else {
                 $user->poin += $transaksi->poin_diperoleh;
-             }
+            }
             $user->save();
 
             // Respon sukses

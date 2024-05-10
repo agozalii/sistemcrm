@@ -14,7 +14,7 @@
                         <div class="col-sm-7">
                             <select class="form-control" id="nama" name="nama">
                                 <option value="">Pilih Nama Member</option>
-                                @foreach($users as $user)
+                                @foreach ($users as $user)
                                     <option value="{{ $user->id }}">{{ $user->nama }}</option>
                                 @endforeach
                             </select>
@@ -76,14 +76,14 @@
                         <label for="nama_pelanggan" class="form-label">Nama Pelanggan</label>
                         <select class="form-select" id="nama_pelanggan" name="nama_pelanggan">
                             <option value="">Pilih Nama Pelanggan</option>
-                            @foreach($users as $user)
+                            @foreach ($users as $user)
                                 <option value="{{ $user->nama }}">{{ $user->nama }}</option>
                             @endforeach
                         </select>
                     </div> --}}
-                    <select class="form-select" id="nama_pelanggan" name="nama_pelanggan">
+                    <select class="form-select" id="nama_pelanggan" name="nama_pelanggan" onchange="getPoin()">
                         <option value="">Pilih Nama Pelanggan</option>
-                        @foreach($users as $user)
+                        @foreach ($users as $user)
                             <option value="{{ $user->id }}">{{ $user->nama }}</option>
                         @endforeach
                     </select>
@@ -94,7 +94,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="total_poin" class="form-label">Total Poin Dimiliki</label>
-                        <input type="text" class="form-control" id="total_poin" name="total_poin" value="{{ session('totalPoin') }}" readonly>
+                        <input type="text" class="form-control" id="total_poin" name="total_poin" readonly>
+                        <input type="hidden" class="form-control" id="poin_awal" name="poin_awal">
                     </div>
                     <div class="mb-3">
                         <label for="total_transaksi" class="form-label">Total Transaksi</label>
@@ -105,8 +106,8 @@
                         <input type="text" class="form-control" id="poin_diperoleh" name="poin_diperoleh" readonly>
                     </div>
                     <div class="mb-3">
-                        <label for="poin_diperoleh" class="form-label">Poin Ingin Ditukar</label>
-                        <input type="text" class="form-control" id="poin_diperoleh" name="poin_diperoleh" >
+                        <label for="poin_ditukar" class="form-label">Poin Ingin Ditukar</label>
+                        <input type="text" class="form-control" id="poin_ditukar" name="poin_ditukar">
                     </div>
 
 
@@ -127,11 +128,69 @@
 </div>
 
 <script>
+    function getPoin() {
+        var id_user = document.getElementById('nama_pelanggan').value;
+
+        $.ajax({
+            url: "{{ route('transaksi.getPoin') }}",
+            method: "POST",
+            data: {
+                id_user: id_user
+            },
+            success: function(data) {
+                if (data == 0 || data == null) {
+                    $("#total_poin").val(0);
+                    $("#poin_awal").val(0);
+                } else {
+                    $("#total_poin").val(data);
+                    $("#poin_awal").val(data);
+                }
+            }
+
+        })
+    }
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Ketika nilai poin_ditukar berubah
+        $('#poin_ditukar').on('change', function() {
+            var poin_awal = parseFloat($('#poin_awal').val());
+            var poinDitukar = $(this).val();
+            var totalPoin = parseFloat($('#total_poin').val());
+
+            // Mengecek apakah nilai poin_ditukar valid (angka dan tidak negatif)
+            if (isNaN(poinDitukar) || poinDitukar < 0) {
+                alert('Masukkan jumlah poin yang valid.');
+                $(this).val('');
+                $('#total_poin').val(poin_awal);
+                return;
+            }
+
+            // Mengecek apakah nilai poin_ditukar tidak melebihi total_poin
+            if (parseFloat(poinDitukar) > totalPoin) {
+                alert('Poin yang ingin ditukar melebihi total poin yang dimiliki.');
+                $(this).val(poin_awal);
+                $('#total_poin').val(poin_awal);
+                return;
+            }
+
+            if (poinDitukar <= 0) {
+                $('#total_poin').val(poin_awal);
+            } else {
+                var sisaPoin = totalPoin - parseFloat(poinDitukar);
+                $('#total_poin').val(sisaPoin);
+            }
+        });
+    });
+</script>
+
+<script>
     let produkCount = 0;
 
     function addProduk() {
-    produkCount++;
-    const produkInput = `
+        produkCount++;
+        const produkInput = `
         <div class="mb-3">
             <label for="produk_id_${produkCount}" class="form-label">Produk ID ${produkCount}</label>
             <select class="form-select" id="produk_id_${produkCount}" name="produk_id[]">
@@ -145,100 +204,98 @@
             <input type="number" class="form-control" id="jumlah_beli_produk_${produkCount}" name="jumlah_beli_produk[]" required>
         </div>
     `;
-    document.getElementById('produk-container').insertAdjacentHTML('beforeend', produkInput);
-    updateTotal(); // Panggil fungsi untuk memperbarui total transaksi setelah menambahkan produk baru
-}
+        document.getElementById('produk-container').insertAdjacentHTML('beforeend', produkInput);
+        updateTotal(); // Panggil fungsi untuk memperbarui total transaksi setelah menambahkan produk baru
+    }
 
 
-// document.getElementById('nama_pelanggan').addEventListener('change', function() {
-//     var selectedName = this.value;
-//     if (selectedName) {
-//         // Kirim permintaan AJAX ke server
-//         var xhr = new XMLHttpRequest();
-//         xhr.open('GET', '/get-total-poin/' + selectedName, true);
-//         xhr.onload = function() {
-//             if (xhr.status == 200) {
-//                 var response = JSON.parse(xhr.responseText);
-//                 document.getElementById('poin_total').value = response.poin_total;
-//             }
-//         };
-//         xhr.send();
-//     } else {
-//         document.getElementById('poin_total').value = '';
-//     }
-// });
+    // document.getElementById('nama_pelanggan').addEventListener('change', function() {
+    //     var selectedName = this.value;
+    //     if (selectedName) {
+    //         // Kirim permintaan AJAX ke server
+    //         var xhr = new XMLHttpRequest();
+    //         xhr.open('GET', '/get-total-poin/' + selectedName, true);
+    //         xhr.onload = function() {
+    //             if (xhr.status == 200) {
+    //                 var response = JSON.parse(xhr.responseText);
+    //                 document.getElementById('poin_total').value = response.poin_total;
+    //             }
+    //         };
+    //         xhr.send();
+    //     } else {
+    //         document.getElementById('poin_total').value = '';
+    //     }
+    // });
 
 
     function updateTotal() {
-    let total = 0;
-    document.querySelectorAll('[id^=produk_id_]').forEach(function(select, index) {
-        const harga = parseFloat(select.options[select.selectedIndex].getAttribute('data-harga'));
-        const jumlah = parseFloat(document.getElementById(`jumlah_beli_produk_${index+1}`).value);
-        if (!isNaN(harga) && !isNaN(jumlah)) {
-            total += harga * jumlah;
-        }
-    });
-    document.getElementById('total_transaksi').value = total;
-}
-
-document.getElementById('produk-container').addEventListener('change', function(event) {
-    if (event.target.matches('select[id^=produk_id_]')) {
-        updateTotal();
+        let total = 0;
+        document.querySelectorAll('[id^=produk_id_]').forEach(function(select, index) {
+            const harga = parseFloat(select.options[select.selectedIndex].getAttribute('data-harga'));
+            const jumlah = parseFloat(document.getElementById(`jumlah_beli_produk_${index+1}`).value);
+            if (!isNaN(harga) && !isNaN(jumlah)) {
+                total += harga * jumlah;
+            }
+        });
+        document.getElementById('total_transaksi').value = total;
     }
-});
 
-document.getElementById('produk-container').addEventListener('input', function(event) {
-    if (event.target.matches('input[id^=jumlah_beli_produk_]')) {
-        updateTotal();
-    }
-});
-
-function updateTotal() {
-    let total = 0;
-    document.querySelectorAll('[id^=produk_id_]').forEach(function(select, index) {
-        const harga = parseFloat(select.options[select.selectedIndex].getAttribute('data-harga'));
-        const jumlah = parseFloat(document.getElementById(`jumlah_beli_produk_${index+1}`).value);
-        if (!isNaN(harga) && !isNaN(jumlah)) {
-            total += harga * jumlah;
-        }
-    });
-    document.getElementById('total_transaksi').value = total;
-
-    // Menghitung poin yang diperoleh (1 poin untuk setiap 10.000 total transaksi)
-    const poin = Math.floor(total / 100);
-    document.getElementById('poin_diperoleh').value = poin;
-}
-
-function getTotalPoin() {
-    // Ambil semua elemen yang memiliki kelas 'poin_diperoleh'
-    const poinElements = document.querySelectorAll('.poin_diperoleh');
-
-    let totalPoin = 0;
-
-    // Iterasi melalui setiap elemen poin dan tambahkan nilainya ke totalPoin
-    poinElements.forEach((element) => {
-        const poin = parseFloat(element.textContent); // Ambil nilai poin sebagai angka
-        if (!isNaN(poin)) {
-            totalPoin += poin;
+    document.getElementById('produk-container').addEventListener('change', function(event) {
+        if (event.target.matches('select[id^=produk_id_]')) {
+            updateTotal();
         }
     });
 
-    return totalPoin;
-}
+    document.getElementById('produk-container').addEventListener('input', function(event) {
+        if (event.target.matches('input[id^=jumlah_beli_produk_]')) {
+            updateTotal();
+        }
+    });
 
-// Fungsi untuk mengisi input "total poin" pada formulir
-function fillTotalPoin() {
-    const totalPoinInput = document.getElementById('total_poin');
-    if (totalPoinInput) {
-        const totalPoin = getTotalPoin();
-        totalPoinInput.value = totalPoin;
+    function updateTotal() {
+        let total = 0;
+        document.querySelectorAll('[id^=produk_id_]').forEach(function(select, index) {
+            const harga = parseFloat(select.options[select.selectedIndex].getAttribute('data-harga'));
+            const jumlah = parseFloat(document.getElementById(`jumlah_beli_produk_${index+1}`).value);
+            if (!isNaN(harga) && !isNaN(jumlah)) {
+                total += harga * jumlah;
+            }
+        });
+        document.getElementById('total_transaksi').value = total;
+
+        // Menghitung poin yang diperoleh (1 poin untuk setiap 10.000 total transaksi)
+        const poin = Math.floor(total / 100);
+        document.getElementById('poin_diperoleh').value = poin;
     }
-}
 
-// Panggil fungsi fillTotalPoin saat halaman dimuat
-document.addEventListener('DOMContentLoaded', function() {
-    fillTotalPoin();
-});
+    function getTotalPoin() {
+        // Ambil semua elemen yang memiliki kelas 'poin_diperoleh'
+        const poinElements = document.querySelectorAll('.poin_diperoleh');
 
+        let totalPoin = 0;
 
+        // Iterasi melalui setiap elemen poin dan tambahkan nilainya ke totalPoin
+        poinElements.forEach((element) => {
+            const poin = parseFloat(element.textContent); // Ambil nilai poin sebagai angka
+            if (!isNaN(poin)) {
+                totalPoin += poin;
+            }
+        });
+
+        return totalPoin;
+    }
+
+    // Fungsi untuk mengisi input "total poin" pada formulir
+    // function fillTotalPoin() {
+    //     const totalPoinInput = document.getElementById('total_poin');
+    //     if (totalPoinInput) {
+    //         const totalPoin = getTotalPoin();
+    //         totalPoinInput.value = totalPoin;
+    //     }
+    // }
+
+    // Panggil fungsi fillTotalPoin saat halaman dimuat
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     fillTotalPoin();
+    // });
 </script>
