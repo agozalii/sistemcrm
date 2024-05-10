@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class PoinController extends Controller
 {
@@ -25,7 +26,7 @@ class PoinController extends Controller
     $userId = Auth::id();
 
     // Menghitung total poin_diperoleh dari semua transaksi user
-    $totalPoin = Auth::user()->point;
+    $totalPoin = Auth::user()->poin;
 
     // Menghitung total kolom total dari semua transaksi user
     $totalTransaksi = DB::table('transaksi')
@@ -49,8 +50,10 @@ public function klaim()
 {
     $gifts = GiftModel::all();
 
+    $user = Auth::user();
+
     // Kemudian kirimkan data ke tampilan menggunakan view()
-    return view('member.klaim', compact('gifts'));
+    return view('member.klaim', compact('gifts', 'user'));
 
 }
 
@@ -86,52 +89,49 @@ public function klaim()
 // }
 
 //
-public function statusklaim(Request $request, $nama_gift)
+public function store(Request $request)
 {
-    // Periksa apakah permintaan datang dengan metode POST
-    if ($request->isMethod('post')) {
-        // Ambil user yang sedang login
-        $user_id = auth()->id();
+    // Tanggal klaim diisi dengan tanggal saat ini
+    $tanggal_klaim = now();
 
-        // Temukan ID gift berdasarkan nama gift
-        $gift = GiftModel::where('nama_gift', $nama_gift)->first();
+    // Status diisi dengan 'Menunggu'
+    $status = 'Menunggu';
 
-        // Periksa apakah gift ditemukan
-        if ($gift) {
-            // Tanggal klaim diisi dengan tanggal saat ini
-            $tanggal_klaim = now();
+    // Simpan data klaim poin ke dalam tabel klaim_poin
+    $klaim = new KlaimPoinModel;
+    $klaim->user_id = $request->user_id;
+    $klaim->gift_id = $request->id;
+    $klaim->tanggal_klaim = $tanggal_klaim;
+    $klaim->status = $status;
 
-            // Status diisi dengan 'Menunggu'
-            $status = 'Menunggu';
+    if ($klaim->save()) {
 
-            // Simpan data klaim poin ke dalam tabel klaim_poin
-            KlaimPoinModel::create([
-                'user_id' => $user_id,
-                'gift_id' => $gift->id, // Gunakan ID gift yang ditemukan
-                'tanggal_klaim' => $tanggal_klaim,
-                'status' => $status
-            ]);
-
-            // Redirect ke halaman sebelumnya dengan pesan sukses
-            return redirect()->route('member.statusklaim');
-        } else {
-            // Jika gift tidak ditemukan, kembalikan pesan error
-            return redirect()->back()->with('error', 'Nama gift tidak valid.');
-        }
+        $user = User::findOrFail($request->user_id);
+        $user->poin -= $request->poin_cost; //update poin ketika berhasil klaim poin
+        $user->save();
+        // Redirect ke halaman sebelumnya dengan pesan sukses
+        Session::flash('success', 'Berhasil klaim gift');
+        return redirect()->route('member.statusklaim');
     } else {
-        // Jika permintaan bukan metode POST, kembalikan response kosong
-        return response()->json([], 204);
+        // Jika gift tidak ditemukan, kembalikan pesan error
+    Session::flash('error', 'Gagal claim gift');
+    return redirect()->back()->with('error', 'Nama gift tidak valid.');
     }
+
 }
 
 public function showStatusklaim()
 {
     // Ambil data klaim poin yang sesuai dengan user yang sedang login
     $user_id = auth()->id();
-    $klaimPoin = KlaimPoinModel::where('user_id', $user_id)->get();
+    $klaimPoin = KlaimPoinModel::query()
+            ->with(['gift', 'user'])
+            ->where('user_id', $user_id)
+            ->get();
+    $user = Auth::user();
 
     // Kemudian kirimkan data tersebut ke view 'member.statusklaim'
-    return view('member.klaimstatus', compact('klaimPoin'));
+    return view('member.klaimstatus', compact('klaimPoin', 'user'));
 }
 
 
@@ -155,10 +155,6 @@ public function showStatusklaim()
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
 
 
 

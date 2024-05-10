@@ -149,7 +149,7 @@ class TransaksiController extends Controller
     {
         try {
             // Validasi data yang diterima
-            // dd($request->all()); 
+            // dd($request->all());
             $validasi = Validator::make($request->all(), [
                 'nama_pelanggan' => 'required',
                 'tanggal_transaksi' => 'required',
@@ -164,7 +164,7 @@ class TransaksiController extends Controller
                 return back()->withErrors($errors)->withInput();
             }
 
-               
+
 
             // Buat nomor order
             $no_order = 'NT-' . date('Ymd') . '-' . rand(100, 999);
@@ -200,10 +200,10 @@ class TransaksiController extends Controller
 
             // Hitung total poin dari transaksi
             $user = User::where('id', $request->nama_pelanggan)->first();
-            if($user->point == null){
-                $user->point = $transaksi->poin_diperoleh;
+            if($user->poin == null || $user->poin == 0){
+                $user->poin = $transaksi->poin_diperoleh;
              }else{
-                $user->point += $transaksi->poin_diperoleh;
+                $user->poin += $transaksi->poin_diperoleh;
              }
             $user->save();
 

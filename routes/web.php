@@ -55,12 +55,12 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/rekomendasi/{id}/filter', [DashboardController::class, 'filterByCategory'])->name('gunung.filter');
     Route::get('/member/poin', [PoinController::class, 'poin'])->name('poin');
     Route::get('/member/klaim', [PoinController::class, 'klaim'])->name('klaim');
-    Route::post('/member/klaim/statusklaim/{nama_gift}', [PoinController::class, 'statusklaim'])->name('statusklaim');
+    Route::post('/member/klaim/store', [PoinController::class, 'store'])->name('member.klaim.store');
     Route::get('/statusklaim/{nama_gift}', [KlaimPoinController::class, 'statusklaim'])->name('statusklaim');
     // Route::get('/member/klaim/statusklaim/{nama_gift}', [PoinController::class, 'statusklaim'])->name('statusklaim');
 
     Route::get('/member/klaim/statusklaim', [PoinController::class, 'showStatusklaim'])->name('member.statusklaim');
-    
+
     Route::post('/simpan-kritik-saran', [KritikSaranController::class, 'simpan'])->name('simpanKritikSaran');
     //end user
 

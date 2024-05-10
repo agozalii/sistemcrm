@@ -24,7 +24,7 @@ return new class extends Migration
             $table->enum('jenis_kelamin', ['L','P']);
             $table->char('email');
             $table->char('nomor_telpon');
-            $table->string('point', 10)->nullable();
+            $table->string('poin', 10)->nullable();
             $table->timestamps();
         });
     }

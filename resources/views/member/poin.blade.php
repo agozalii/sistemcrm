@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+    @include('layout.alerts')
     <div class="container">
         <div class="mb-3 d-flex justify-content-between" style="margin-top: 80px;">
         </div>
@@ -17,10 +18,10 @@
                 style="width:800px; font-size: 20px; margin: 0 auto; margin-bottom:40px">
                 <thead>
                     <tr>
-                        <td>Jumlah Transaksi: <strong>{{ $jumlahTransaksi }}</strong></td>
-                        <td>Total Transaksi: <strong>{{ $totalTransaksi }}</strong></td>
-                        <td>Poin Saya: <strong>{{ $totalPoin }}</strong></td>
-                        <th> <a href="{{ route('klaim') }}" class="btn btn-warning" style="width: 150px;">Tukarkan Poin</a></th>
+                        <td style="text-align: center">Jumlah Transaksi: <br> <strong>{{ $jumlahTransaksi }}</strong></td>
+                        <td style="text-align: center">Total Transaksi: <br> <strong>Rp. {{ number_format($totalTransaksi, 2) }}</strong></td>
+                        <td style="text-align: center">Poin Saya: <br><strong>{{ $totalPoin }}</strong></td>
+                        <th style="text-align: center;"> <a href="{{ route('klaim') }}" class="btn btn-warning mb-2" style="width: 150px;">Tukarkan Poin</a></th>
                         </th>
                     </tr>
                 </thead>
