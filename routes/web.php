@@ -92,6 +92,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/admin/addTransaksi', [TransaksiController::class, 'addTransaksi'])->name('addTransaksi');
         Route::POST('/admin/addDataTransaksi', [TransaksiController::class, 'store'])->name('addDataTransaksi');
         Route::get('/admin/editTransaksi/{id}', [TransaksiController::class, 'show'])->name('editTransaksi');
+        Route::get('/admin/transaksi/view/{id}', [TransaksiController::class, 'view'])->name('transaksi.view');
         Route::put('/admin/updateTransaksi/{id}', [TransaksiController::class, 'update'])->name('updateTransaksi');
         Route::get('/admin/deleteTransaksi/{id}', [TransaksiController::class, 'destroy'])->name('deleteTransaksi');
 
@@ -112,6 +113,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
         Route::resource('klaimpoin', KlaimPoinController::class);
+        Route::get('/admin/klaim/klaimMember/{id}', [KlaimPoinController::class, 'update'])->name('klaim.klaimMember');
         Route::resource('umpanbalik', UmpanBalikController::class);
         Route::resource('laporan', LaporanController::class);
     });

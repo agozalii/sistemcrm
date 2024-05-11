@@ -39,6 +39,15 @@
                             <input type="text" class="form-control" id="deskripsi" name="deskripsi" value="{{$data->deskripsi}}">
                         </div>
                     </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-5 col-form-label">Status</label>
+                        <div class="col-sm-7">
+                            <select name="status" id="">
+                                <option value="Menunggu" @if($data->status == 'Menunggu') selected @endif>Menunggu</option>
+                                <option value="Terklaim" @if($data->status == 'Terklaim') selected @endif>Terklaim</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
 

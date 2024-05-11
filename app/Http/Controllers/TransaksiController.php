@@ -47,7 +47,8 @@ class TransaksiController extends Controller
      */
     public function create()
     {
-        $users = User::all();  // Mengambil semua data pengguna dari tabel users
+        $users = User::query()->where('role', 'member')->get();  // Mengambil semua data pengguna dari tabel users
+        
         return view('admin.modal.addTransaksi', compact('users'));
     }
 
@@ -111,9 +112,22 @@ class TransaksiController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function view(string $id)
     {
-        //
+
+        $transaksi = TransaksiModel::query()
+                    ->with(['user', 'detail', 'detail.produk'])
+                    ->where('id', $id)
+                    ->first();
+
+        $user = Auth::user();
+        // dd($user);
+
+        return view('admin.show-transaksi', [
+            'title' => 'Detail Transaksi',
+            'transaksi' => $transaksi,
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -145,7 +159,7 @@ class TransaksiController extends Controller
     public function addTransaksi()
     {
         $produks = ProdukModels::all();
-        $users = User::all();
+        $users = User::query()->where('role', 'member')->get();
 
         return view('admin.modal.addTransaksi', [
             'title' => 'Tambah  Transaksi',

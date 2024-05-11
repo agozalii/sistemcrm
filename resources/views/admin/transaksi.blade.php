@@ -219,7 +219,7 @@
                             {{-- <td>Rp. {{ number_format($item->total_transaksi, 2) }}</td>
                             <!-- Tambahkan kolom lainnya sesuai kebutuhan --> --}}
                             <td>
-                                <a href="{{ route('viewTransaksi', $item->id) }}" class="btn btn-warning">
+                                <a href="{{ route('transaksi.view', $item->id) }}" class="btn btn-warning">
                                 <i class="fas fa-eye"></i>
                                 </a>
                                 <button class="btn btn-info editTransaksi" data-id="{{ $item->id }}">

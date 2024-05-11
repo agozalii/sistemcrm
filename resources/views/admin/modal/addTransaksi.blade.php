@@ -81,7 +81,7 @@
                             @endforeach
                         </select>
                     </div> --}}
-                    <select class="form-select" id="nama_pelanggan" name="nama_pelanggan" onchange="getPoin()">
+                    <select class="form-select" id="nama_pelanggan" name="nama_pelanggan" onchange="getPoin()" required>
                         <option value="">Pilih Nama Pelanggan</option>
                         @foreach ($users as $user)
                             <option value="{{ $user->id }}">{{ $user->nama }}</option>
@@ -90,7 +90,7 @@
 
                     <div class="mb-3">
                         <label for="tanggal_transaksi" class="form-label">Tanggal Transaksi</label>
-                        <input type="date" class="form-control" id="tanggal_transaksi" name="tanggal_transaksi">
+                        <input type="date" class="form-control" id="tanggal_transaksi" name="tanggal_transaksi" required>
                     </div>
                     <div class="mb-3">
                         <label for="total_poin" class="form-label">Total Poin Dimiliki</label>
@@ -186,14 +186,14 @@
 </script>
 
 <script>
-    let produkCount = 0;
-
+    
     function addProduk() {
+    let produkCount = 0;
         produkCount++;
         const produkInput = `
         <div class="mb-3">
             <label for="produk_id_${produkCount}" class="form-label">Produk ID ${produkCount}</label>
-            <select class="form-select" id="produk_id_${produkCount}" name="produk_id[]">
+            <select class="form-select" id="produk_id_${produkCount}" name="produk_id[]" required>
                 @foreach ($produks as $row)
                 <option value="{{ $row->id }}" data-harga="{{ $row->harga_produk }}">{{ $row->id }} - {{ $row->nama_produk }}</option>
                 @endforeach
