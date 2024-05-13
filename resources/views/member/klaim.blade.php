@@ -12,7 +12,7 @@
             @foreach ($gifts as $gift)
                 <div class="col-md-3 mb-4 mt-1">
                     <div class="card" style="width: 18rem;">
-                        <form id="klaimPoinForm" action="{{ route('member.klaim.store') }}" method="POST">
+                        <form id="klaimPoinForm{{ $gift->id }}" action="{{ route('member.klaim.store') }}" method="POST">
                             @csrf
                             <input type="hidden" name="poin_cost" value="{{ $gift->poin_cost }}">
                             <input type="hidden" name="id" value="{{ $gift->id }}">
@@ -22,7 +22,7 @@
                                 <h5 class="card-title">{{ ucwords($gift->nama_gift) }}</h5>
                                 <p class="card-text">Harga Poin : <strong>{{ $gift->poin_cost }}</strong></p>
                                 @if ($user->poin >= $gift->poin_cost)
-                                    <button type="button" onclick="tukarPoin()" class="btn btn-primary" style="width: 100%">Tukar</button>
+                                    <button type="button" onclick="tukarPoin({{ $gift->id }})" class="btn btn-primary" style="width: 100%">Tukar</button>
                                 @else
                                     <button type="button" class="btn btn-primary" style="width: 100%" disabled>Tukar</button>
                                 @endif
@@ -36,7 +36,7 @@
 @endsection
 
 <script>
-    function tukarPoin() {
+    function tukarPoin(id) {
     Swal.fire({
         title: 'Konfirmasi',
         text: 'Apakah Anda yakin akan menukar poin Anda dengan ' + '{{ ucwords($gift->nama_gift) }}' + '?',
@@ -49,7 +49,7 @@
     }).then((result) => {
         if (result.isConfirmed) {
             // Jika dikonfirmasi, submit form
-            document.getElementById("klaimPoinForm").submit();
+            document.getElementById("klaimPoinForm"+id).submit();
         }
     });
 }

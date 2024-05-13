@@ -104,6 +104,7 @@ public function store(Request $request)
     $klaim->tanggal_klaim = $tanggal_klaim;
     $klaim->status = $status;
 
+
     if ($klaim->save()) {
 
         $user = User::findOrFail($request->user_id);

@@ -75,8 +75,22 @@
       </p>
     </a>
   </li>
-
-
+  <li class="nav-item">
+    <a href="{{ url('/kasir/transaksi/tambah') }}" class="nav-link">
+      <i class="nav-icon far fa-image"></i>
+      <p>
+      Input Transaksi
+      </p>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a href="{{ url('/kasir/transaksi') }}" class="nav-link">
+      <i class="nav-icon far fa-image"></i>
+      <p>
+      History Transaksi
+      </p>
+    </a>
+  </li>
   {{-- @elseif ($user->role == 'member')
   <li class="nav-item">
     <a href="{{ url('klasifikasigunung') }}" class="nav-link">
