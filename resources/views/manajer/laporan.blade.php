@@ -1,28 +1,40 @@
 @extends('layout.main')
 
 @section('judul')
-    Halaman Data Klaim Poin
+    Halaman Data Laporan Kritik dan Saran
 @endsection
 
 @section('isi')
     <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <button style="background-color: #06696d;display:none" class="btn btn-success mb-3" id="addDataMember">
-                        <i class="fa fa-plus"></i>
-                        <span> Tambah Data Poin</span>
-
-                    </button>
-                </div>
-
+        <div class="card-header">
+            <h3 class="card-title col-md-12 mb-4">Data Laporan</h3>
+            <div class="mt-2">
+                <form action="{{ route('laporan.index') }}" method="GET">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="tgl_awal">Tgl. Awal</label>
+                            <input type="date" name="tgl_awal" class="form-control" id="datepicker"
+                                placeholder="Tgl. Awal" value="{{ $tgl_awal }}">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="tgl_akhir">Tgl. Akhir</label>
+                            <input type="date" name="tgl_akhir" class="form-control" id="datepicker"
+                                placeholder="Tgl. Awal" value="{{ $tgl_akhir }}">
+                        </div>
+                        <div class="col-md-3 d-inline-flex gap-1">
+                            <button type="submit" class="btn btn-primary" style="margin-top: 32px"><i
+                                    class="fa fa-filter"></i> Filter</button>
+                            <a href="{{ route('laporan.index') }}" class="btn btn-danger" style="margin-top: 32px"><i
+                                    class="fa fa-eraser"></i> Reset</a>
+                                {{-- <a href="{{ route('laporan.cetak') }}" class="btn btn-dark" style="margin-top: 32px"><i
+                                        class="fa fa-print"></i> Cetak</a> --}}
+                        </div>
+                    </div>
+                </form>
             </div>
+        </div>
+        <div class="card-body">
 
-            @if ($message = Session::get('success'))
-                <div class="alert alert-success" role="alert">
-                    {{ $message }}
-                </div>
-            @endif
             <div style="overflow-x:auto;">
                 {{-- height:300px; --}}
                 <table id="example1" class="table table-bordered table-striped"
@@ -31,12 +43,9 @@
                         {{-- class="sticky-top" --}}
                         <tr style="text-align: center">
                             <th>No</th>
-                            <th>Nama</th>
-                            <th>nama Gift</th>
-                            <th>Tanggal Klaim</th>
-                            <th>Tanggal Konfirmasi</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
+                            <th>Nama Pelanggan</th>
+                            <th>Isi Kritik & Saran</th>
+                            <th>Tanggal Kirim</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,35 +56,8 @@
                             <tr>
                                 <th>{{ $no++ }}</th>
                                 <td>{{ $d->user->nama }}</td>
-                                <td>{{ $d->gift->nama_gift }}</td>
-                                <td>{{ date('d F Y', strtotime($d->tanggal_klaim)) }}</td>
-                                <td>{{ $d->status != 'Menunggu' ? date('d F Y', strtotime($d->updated_at)) : '-' }}</td>
-                                <td>
-                                    @if ($d->status == 'Terklaim')
-                                        <span class="badge bg-success text-light">Terklaim</span>
-                                    @elseif($d->status == 'Menunggu')
-                                        <span class="badge bg-warning text-dark">Menunggu</span>
-                                    @else
-                                        <span class="badge bg-danger text-light">Ditolak</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($d->status == 'Menunggu')
-                                        <div class="inline-flex">
-                                            <button class="btn btn-info" style="100px"
-                                                onclick="klaimGift({{ $d->id }}, '{{ $d->user->nama }}')">
-                                                <i class="fas fa-check"></i>
-                                            </button>
-                                            <div class="d-inline-flex">
-                                                <button class="btn btn-danger" style="100px"
-                                                    onclick="rejectGift({{ $d->id }}, '{{ $d->user->nama }}')">
-                                                    <i class="fas fa-times"></i>
-                                                </button>
-                                            </div>
-                                        @else
-                                            <span class="btn btn-success text-light">Selesai</span>
-                                    @endif
-                                </td>
+                                <td>{{ $d->isi_kritiksaran }}</td>
+                                <td>{{ date('d F Y', strtotime($d->tgl_kirim)) }}</td>
                             </tr>
                         @endforeach
 
@@ -91,7 +73,36 @@
                     buttons: [{
                         extend: 'pdf',
                         text: 'Print PDF',
-                        title: 'Laporan Data Klaim Poin',
+                        title: 'Laporan Kritik Dan Saran',
+                        customize: function(doc) {
+                            var tableBody = doc.content[1].table.body;
+                            tableBody.forEach(function(row) {
+                                row.forEach(function(cell) {
+                                    cell.margin = [10, 5, 10, 5]; // [left, top, right, bottom]
+                                });
+                            });
+
+                            // Mengatur lebar kolom agar tabel memenuhi 100% lebar halaman
+                            var objLayout = {};
+                            objLayout['hLineWidth'] = function(i) { return .5; };
+                            objLayout['vLineWidth'] = function(i) { return .5; };
+                            objLayout['hLineColor'] = function(i) { return '#aaa'; };
+                            objLayout['vLineColor'] = function(i) { return '#aaa'; };
+                            objLayout['paddingLeft'] = function(i) { return 10; };
+                            objLayout['paddingRight'] = function(i) { return 10; };
+                            objLayout['paddingTop'] = function(i) { return 5; };
+                            objLayout['paddingBottom'] = function(i) { return 5; };
+
+                            doc.content[1].layout = objLayout;
+
+                             // Mengatur lebar kolom pertama otomatis dan lainnya 100%
+                            var widths = ['auto']; // Kolom pertama otomatis
+                            var numCols = doc.content[1].table.body[0].length;
+                            for (var i = 1; i < numCols; i++) {
+                                widths.push('*');
+                            }
+                            doc.content[1].table.widths = widths;
+                        }
                     }],
                     lengthMenu: [
                         [5, 10, 25, 50, -1],
@@ -100,7 +111,7 @@
                 });
             });
         </script>
-    
+
         <script>
             function klaimGift(id, name) {
                 Swal.fire({
@@ -131,7 +142,7 @@
                     }
                 });
             }
-    
+
             function rejectGift(id, name) {
                 Swal.fire({
                     title: 'Konfirmasi',
@@ -163,5 +174,3 @@
             }
         </script>
     @endsection
-
-

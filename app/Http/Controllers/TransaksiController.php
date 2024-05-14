@@ -51,22 +51,41 @@ class TransaksiController extends Controller
 
     public function getPoin(Request $request)
     {
-
         $id_user = $request->input('id_user');
 
         $user = User::findOrFail($id_user);
 
         return $user->poin;
     }
+
+    public function edit($id)
+    {
+        $produks = ProdukModels::all();
+        $users = User::query()->where('role', 'member')->get();
+
+        $transaki = TransaksiModel::query()
+            ->with(['user', 'detail'])
+            ->where('id', $id)
+            ->first();
+
+        return view('admin.edit-transaksi', [
+            'title' => 'Edit  Transaksi' . $transaki->user->nama,
+            'produks' => $produks,
+            'users' => $users,
+            'user' => Auth::user(),
+            'transaksi' => $transaki
+        ]);
+    }
+
     /**
      * Display the specified resource.
      */
     public function show($id)
     {
         $data = TransaksiModel::query()
-        ->with(['user', 'detail', 'detail.produk'])
-        ->where('id', $id)
-        ->first();
+            ->with(['user', 'detail', 'detail.produk'])
+            ->where('id', $id)
+            ->first();
 
         $users = User::all();
         $produks = ProdukModels::all();
@@ -87,11 +106,10 @@ class TransaksiController extends Controller
      */
     public function view(string $id)
     {
-
         $transaksi = TransaksiModel::query()
-                    ->with(['user', 'detail', 'detail.produk'])
-                    ->where('id', $id)
-                    ->first();
+            ->with(['user', 'detail', 'detail.produk'])
+            ->where('id', $id)
+            ->first();
 
         $user = Auth::user();
         // dd($user);
@@ -111,7 +129,7 @@ class TransaksiController extends Controller
         // dd($request->all());
         try {
             $validasi = Validator::make($request->all(), [
-                'nama_pelanggan' => 'required',
+                'id_user' => 'required',
                 'tanggal_transaksi' => 'required',
                 'total_transaksi' => 'required|numeric',
                 'produk_id' => 'required|array',
@@ -128,7 +146,7 @@ class TransaksiController extends Controller
             if ($request->poin_ditukar != null || $request->poin_ditukar != 0) {
                 $total_transaksi = $total_transaksi - $request->poin_ditukar;
 
-                $user = User::where('id', $request->nama_pelanggan)->first();
+                $user = User::where('id', $request->id_user)->first();
                 if ($user->poin != null || $user->poin != 0) {
                     $user->poin = $user->poin - $request->poin_ditukar;
                 }
@@ -137,7 +155,7 @@ class TransaksiController extends Controller
 
             // Simpan data transaksi ke dalam tabel transaksi
             $transaksi = TransaksiModel::findOrFail($id);
-            $transaksi->user_id = $request->nama_pelanggan;  // Gunakan nama pelanggan yang dipilih
+            $transaksi->user_id = $request->id_user;  // Gunakan nama pelanggan yang dipilih
             $transaksi->tanggal_transaksi = $request->tanggal_transaksi;
             $transaksi->total = $total_transaksi;
 
@@ -147,24 +165,39 @@ class TransaksiController extends Controller
 
             $transaksi->save();
 
-            // Hitung total poin dari transaksi
+            // Array untuk menyimpan jumlah beli per produk
+            $produkCounts = [];
 
+            // Kumpulkan jumlah beli per produk
             foreach ($request->produk_id as $key => $value) {
-                $produk = ProdukModels::findOrFail($value);
-
-                $detailTransaksi = DetailTransaksiModel::where('transaksi_id', $transaksi->id)->where('produk_id', $value)->first();
-                if(!$detailTransaksi){
-                    $detailTransaksi = new DetailTransaksiModel();
+                if (isset($produkCounts[$value])) {
+                    $produkCounts[$value] += $request->jumlah_beli_produk[$key];
+                } else {
+                    $produkCounts[$value] = $request->jumlah_beli_produk[$key];
                 }
-                $detailTransaksi->transaksi_id = $transaksi->id;
-                $detailTransaksi->produk_id = $value;
-                $detailTransaksi->harga_produk = $produk->harga_produk;
-                $detailTransaksi->jumlah_beli_produk = $request->jumlah_beli_produk[$key];
+            }
+
+            // dd($produkCounts);
+
+            // Proses dan simpan detail transaksi
+            foreach ($produkCounts as $produkId => $jumlahBeli) {
+                $produk = ProdukModels::findOrFail($produkId);
+
+                $detailTransaksi = DetailTransaksiModel::where('transaksi_id', $transaksi->id)->where('produk_id', $produkId)->first();
+                if ($detailTransaksi) {
+                    $detailTransaksi->jumlah_beli_produk = $jumlahBeli;
+                } else {
+                    $detailTransaksi = new DetailTransaksiModel();
+                    $detailTransaksi->transaksi_id = $transaksi->id;
+                    $detailTransaksi->produk_id = $produkId;
+                    $detailTransaksi->harga_produk = $produk->harga_produk;
+                    $detailTransaksi->jumlah_beli_produk = $jumlahBeli;
+                }
                 $detailTransaksi->save();
             }
 
             // Hitung total poin dari transaksi
-            $user = User::where('id', $request->nama_pelanggan)->first();
+            $user = User::where('id', $request->id_user)->first();
             if ($user->poin == null || $user->poin == 0) {
                 $user->poin = $transaksi->poin_diperoleh;
             } else {
@@ -173,11 +206,11 @@ class TransaksiController extends Controller
             $user->save();
 
             // Respon sukses
-            Session::flash('toast_success', 'Data transaksi berhasil diperbarui');
-            return redirect()->route('transaksi.index');
+            Session::flash('success', 'Data transaksi berhasil diperbarui');
+            return redirect()->route('transaksi.kasir');
         } catch (\Exception $e) {
             Log::error('Error update transaksi: ' . $e->getMessage());
-            return back()->with('toast_error', 'Data transaksi gagal disimpan.');
+            return back()->with('error', 'Data transaksi gagal disimpan.');
         }
     }
 
@@ -219,7 +252,6 @@ class TransaksiController extends Controller
                 return back()->withErrors($errors)->withInput();
             }
 
-
             $total_transaksi = $request->total_transaksi;
 
             if ($request->poin_ditukar != null || $request->poin_ditukar != 0) {
@@ -256,7 +288,6 @@ class TransaksiController extends Controller
 
             // Hitung total poin dari transaksi
 
-
             foreach ($request->produk_id as $key => $value) {
                 $produk = ProdukModels::findOrFail($value);
 
@@ -267,8 +298,6 @@ class TransaksiController extends Controller
                 $detailTransaksi->jumlah_beli_produk = $request->jumlah_beli_produk[$key];
                 $detailTransaksi->save();
             }
-
-
 
             // Hitung total poin dari transaksi
             $user = User::where('id', $request->id_user)->first();

@@ -46,6 +46,7 @@ class GiftController extends Controller
         $data = new GiftModel();
         $data->nama_gift = $request->nama_gift;
         $data->poin_cost = $request->poin_cost;
+        $data->stock = $request->stock;
         $data->deskripsi = $request->deskripsi;
 
         if ($request->hasFile('gambar_gift')) {
@@ -104,6 +105,7 @@ class GiftController extends Controller
             'nama_gift' => $request->nama_gift,
             'gambar_gift' => $filename,
             'poin_cost' => $request->poin_cost,
+            'stock' => $request->stock,
             'deskripsi' => $request->deskripsi,
         ];
         $data::where('id', $id)->update($field);

@@ -14,10 +14,12 @@ class GiftModel extends Model
         'nama_gift',
         'gambar_gift',
         'poin_cost',
+        'stock',
         'deskripsi',
     ];
-    // public function klaimPoins()
-    // {
-    //     return $this->hasMany(KlaimPoinModel::class);
-    // }
+    
+    public function klaimPoins()
+    {
+        return $this->hasMany(KlaimPoinModel::class);
+    }
 }

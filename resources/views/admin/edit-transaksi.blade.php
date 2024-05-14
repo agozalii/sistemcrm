@@ -1,7 +1,7 @@
 @extends('layout.main')
 
 @section('judul')
-    <strong>Tambah Transaksi</strong>
+    <strong>Edit Transaksi {{ $transaksi->user->nama }}</strong>
 @endsection
 
 @section('isi')
@@ -17,7 +17,7 @@
                     {{ $message }}
                 </div>
             @endif
-            <form action="{{ route('transaksi.simpan') }}" method="POST">
+            <form action="{{ route('kasir.transaksi.update', $transaksi->id) }}" method="POST">
                 @csrf
                 <div class="row mb-4">
                     <div class="col-md-6">
@@ -26,33 +26,33 @@
                             <select class="form-control" id="id_user" name="id_user" onchange="getPoin()">
                                 <option value="">-- Pilih Member --</option>
                                 @foreach ($users as $row)
-                                    <option value="{{ $row->id }}">{{ $row->nama }}</option>
+                                    <option value="{{ $row->id }}" {{ $transaksi->user_id == $row->id ? 'selected' : '' }}>{{ $row->nama }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="tanggal_transaksi" class="form-label">Tanggal Transaksi</label>
-                            <input type="date" class="form-control" id="tanggal_transaksi" value="{{ date('Y-m-d') }}"
+                            <input type="date" class="form-control" id="tanggal_transaksi" value="{{ $transaksi->tanggal_transaksi }}"
                                 name="tanggal_transaksi" required>
                         </div>
                         <div class="form-group">
                             <label for="total_poin" class="form-label">Total Poin Dimiliki</label>
-                            <input type="text" class="form-control" id="total_poin" name="total_poin" readonly>
-                            <input type="hidden" class="form-control" id="poin_awal" name="poin_awal">
+                            <input type="text" class="form-control" id="total_poin" name="total_poin" value="{{ $transaksi->user->poin }}" readonly>
+                            <input type="hidden" class="form-control" id="poin_awal" name="poin_awal" value="{{ $transaksi->user->poin }}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="total_transaksi" class="form-label">Total Transaksi</label>
-                            <input type="text" class="form-control" id="total_transaksi" name="total_transaksi" readonly>
+                            <input type="text" class="form-control" id="total_transaksi" name="total_transaksi" value="{{ $transaksi->total }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="poin_diperoleh" class="form-label">Poin Diperoleh</label>
-                            <input type="text" class="form-control" id="poin_diperoleh" name="poin_diperoleh" readonly>
+                            <input type="text" class="form-control" id="poin_diperoleh" name="poin_diperoleh" value="{{ $transaksi->poin_diperoleh }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="poin_ditukar" class="form-label">Poin Ingin Ditukar</label>
-                            <input type="text" class="form-control" id="poin_ditukar" name="poin_ditukar">
+                            <input type="text" class="form-control" id="poin_ditukar" name="poin_ditukar" value="{{ $transaksi->poin_ditukar }}">
                         </div>
                     </div>
 
@@ -66,6 +66,22 @@
                                     </button>
                                 </center>
                             </div>
+                            <div class="row col-lg-12 mt-2">
+                                @foreach ($transaksi->detail as $key => $d)
+                                <div class="mb-3 col-lg-6">
+                                    <label for="produk_id_{{ $key+1 }}" class="form-label">Produk ID {{ $key+1 }}</label>
+                                    <select class="form-select" id="produk_id_{{ $key+1 }}" name="produk_id[]" required>
+                                        @foreach ($produks as $row)
+                                        <option value="{{ $row->id }}" data-harga="{{ $row->harga_produk }}" {{ $d->produk_id == $row->id ? 'selected' : '' }}>{{ $row->id }} - {{ $row->nama_produk }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-lg-6">
+                                    <label for="jumlah_beli_produk_{{ $key+1 }}" class="col-sm-5 form-label">Jumlah Beli Produk {{ $key+1 }}</label>
+                                    <input type="number" class="form-control" id="jumlah_beli_produk_{{ $key+1 }}" onchange="updateTotal()" name="jumlah_beli_produk[]" value="{{ $d->jumlah_beli_produk }}" required>
+                                </div>
+                                @endforeach
+                            </div>
                             <div id="produk-container" class="row col-lg-12">
                                 <!-- Tempat untuk menambahkan input produk dan promosi secara dinamis -->
                             </div>
@@ -78,7 +94,7 @@
                                     <span> Kembali</span>
 
                                 </a>
-                                <button type="button" id="btn-submit" class="btn btn-primary hidden" data-toggle="modal" onclick="showModal()">Simpan</button>
+                                <button type="button" id="btn-submit" class="btn btn-primary" data-toggle="modal" onclick="showModal()">Simpan</button>
 
                                 <button type="submit" id="btn-simpan" class="btn btn-primary hidden"><i
                                         class="fa fa-save"></i> Simpan</button>
@@ -132,7 +148,7 @@
         })
     </script>
     <script>
-        let produkCount = 0;
+        let produkCount = {{ $transaksi->detail->count() }};
 
         function addProduk() {
             $('#btn-submit').removeClass('hidden');
@@ -143,12 +159,12 @@
                             <label for="produk_id_${produkCount}" class="form-label">Produk ID ${produkCount}</label>
                             <select class="form-select" id="produk_id_${produkCount}" name="produk_id[]" required>
                                 @foreach ($produks as $row)
-                                    <option value="{{ $row->id }}" data-harga="{{ $row->harga_produk }}">{{ $row->id }} - {{ $row->nama_produk }}</option>
+            <option value="{{ $row->id }}" data-harga="{{ $row->harga_produk }}">{{ $row->id }} - {{ $row->nama_produk }}</option>
                                 @endforeach
-                            </select>
-                            </div>
-                            <div class="mb-3 col-lg-6">
-                                    <label for="jumlah_beli_produk_${produkCount}" class="form-label">Jumlah Beli Produk ${produkCount}</label>
+            </select>
+    </div>
+    <div class="mb-3 col-lg-6">
+            <label for="jumlah_beli_produk_${produkCount}" class="form-label">Jumlah Beli Produk ${produkCount}</label>
                             <input type="number" class="form-control" id="jumlah_beli_produk_${produkCount}" name="jumlah_beli_produk[]" required>
                         </div>
                     `;
