@@ -14,6 +14,7 @@ class KlaimPoinController extends Controller
 
         $data = KlaimPoinModel::query()
                 ->with(['user', 'gift'])
+                ->orderBy('created_at', 'desc')
                 ->get();
 
         $user = Auth::user();
@@ -29,6 +30,10 @@ class KlaimPoinController extends Controller
         $klaim = KlaimPoinModel::findOrFail($id);
         $klaim->status = 'Terklaim';
         if($klaim->save()){
+            $gift = GiftModel::findOrFail($klaim->gift_id);
+            $user = User::findOrFail($klaim->user_id);
+            $user->poin -= $gift->poin_cost;
+            $user->save();
             return 'success';
         }
         return redirect()->back();
@@ -41,9 +46,6 @@ class KlaimPoinController extends Controller
             $gift = GiftModel::findOrFail($klaim->gift_id);
             $gift->stock = $gift->stock + 1;
             if($gift->save()){
-                $user = User::findOrFail($klaim->user_id);
-                $user->poin = $user->poin + $gift->poin_cost;
-                $user->save();
                 return 'success';
             }
         }

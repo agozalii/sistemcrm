@@ -89,9 +89,9 @@ public function store(Request $request)
         $gift->stock -= 1; //update stock gift ketika berhasil klaim poin
         $gift->save();
 
-        $user = User::findOrFail($request->user_id);
-        $user->poin -= $request->poin_cost; //update poin ketika berhasil klaim poin
-        $user->save();
+        // $user = User::findOrFail($request->user_id);
+        // $user->poin -= $request->poin_cost; //update poin ketika berhasil klaim poin
+        // $user->save();
         // Redirect ke halaman sebelumnya dengan pesan sukses
         Session::flash('success', 'Berhasil klaim gift');
         return redirect()->route('member.statusklaim');
