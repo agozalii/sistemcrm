@@ -25,14 +25,14 @@
       </p>
     </a>
   </li>
-  <li class="nav-item">
+  {{-- <li class="nav-item">
     <a href="{{ url('transaksi') }}" class="nav-link">
       <i class="nav-icon far fa-image"></i>
       <p>
       Transaksi
       </p>
     </a>
-  </li>
+  </li> --}}
   <li class="nav-item">
     <a href="{{ url('gift') }}" class="nav-link">
       <i class="nav-icon far fa-image"></i>
@@ -57,14 +57,14 @@
       </p>
     </a>
   </li>
-  <li class="nav-item">
+  {{-- <li class="nav-item">
     <a href="{{ url('laporan') }}" class="nav-link">
       <i class="nav-icon far fa-image"></i>
       <p>
       Laporan
       </p>
     </a>
-  </li>
+  </li> --}}
 
   @elseif ($user->role == 'kasir')
   <li class="nav-item">
@@ -137,8 +137,16 @@
     <a href="{{ url('laporan') }}" class="nav-link">
       <i class="nav-icon far fa-image"></i>
       <p>
-      Laporan
+      Laporan Umpan Balik
       </p>
     </a>
   </li>
+  <li class="nav-item">
+    <a href="{{ url('/manajer/laporanklaim') }}" class="nav-link">
+      <i class="nav-icon far fa-image"></i>
+      <p>
+      Laporan Klaim Poin
+      </p>
+    </a>
+  </li>
   @endif

@@ -13,11 +13,18 @@ class GiftController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = GiftModel::all();
+        $query = $request->input('query'); // Ambil query pencarian dari input form
 
-        // Mengirimkan data transaksi dan data pengguna (user) ke tampilan
+        // Jika ada query pencarian, cari produk berdasarkan nama_produk
+        if ($query) {
+            $data = GiftModel::where('nama_produk', 'like', '%' . $query . '%')->paginate(3);
+        } else {
+            // Jika tidak ada query pencarian, tampilkan semua produk
+            $data = GiftModel::paginate(5);
+        }
+
         return view("admin.gift", compact('data'))->with([
             'user' => Auth::user()
         ]);

@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <h3 class="container text-center" style="margin-top: 150px;">Rekomendasi</h3>
+    <h3 class="container text-center" style="margin-top: 75px;">Rekomendasi</h3>
     <div class="container mb-4 mt-3">
         <div class="row">
             @foreach ($gunungs as $gunung)

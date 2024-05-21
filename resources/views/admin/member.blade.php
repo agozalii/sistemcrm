@@ -16,7 +16,7 @@
                     </button>
                 </div>
 
-                {{-- <div class="col-md-6">
+                <div class="col-md-6">
                     <form action="{{ route('member.index') }}" method="GET" class="form-inline float-right">
                         <a href="{{ route('member.index') }}" class="btn btn-link ml-2">
                             <i class="fas fa-sync-alt"></i>
@@ -26,7 +26,7 @@
                         <button type="submit" class="btn btn-primary">Cari</button>
 
                     </form>
-                </div> --}}
+                </div>
 
             </div>
 
@@ -83,7 +83,7 @@
                     </tbody>
                 </table>
             </div>
-            {{-- <div class="d-flex justify-content-center" style="margin-top: 20px;">
+            <div class="d-flex justify-content-center" style="margin-top: 20px;">
                 <ul class="pagination">
                     <li class="page-item">
                         @if ($data->previousPageUrl())
@@ -104,7 +104,7 @@
             </div>
 
             <p class="text-center">Menampilkan {{ $data->firstItem() }} - {{ $data->lastItem() }}, dari total
-                {{ $data->total() }}</p> --}}
+                {{ $data->total() }}</p>
 
 
         </div>

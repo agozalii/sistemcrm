@@ -22,7 +22,7 @@
             @endif
             <div class="table-responsive">
                 <table id="example1" class="table table-bordered table-striped"
-                       style="overflow-x: auto; height: 600px;">
+                       style="overflow-x: auto; height: 300px;">
                     <thead>
                     <tr>
                         <th>No</th>
@@ -44,7 +44,7 @@
                             <td>
                                 @foreach ($item->detail as $detail)
                                     <ul>
-                                        <li>{{ $detail->produk->nama_produk }}</li>
+                                        <li>{{ $detail->produk->nama_produk ?? NULL }}</li>
                                     </ul>
                                 @endforeach
                             </td>
@@ -52,15 +52,15 @@
                             <td>Rp. {{ number_format($item->total, 2) }}</td>
                             <td>{{ $item->poin_diperoleh }}</td>
                             <td>
-                                
+
                                 @if($user->role == 'kasir')
                                 <a href="{{ route('transaksi.show', $item->id) }}" class="btn btn-warning">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a href="{{ route('kasir.transaksi.edit', $item->id) }}" class="btn btn-info">
+                                {{-- <a href="{{ route('kasir.transaksi.edit', $item->id) }}" class="btn btn-info">
                                     <i class="fas fa-edit"></i>
-                                </a>
-                                <button class="btn btn-danger deleteProduk" data-id="{{ $item->id }}">
+                                </a> --}}
+                                <button class="btn btn-danger deleteTransaksi" data-id="{{ $item->id }}">
                                     <i class="fas fa-trash"></i>
                                 </button>
                                 @else
@@ -99,6 +99,62 @@
                     ],
                     lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
                 });
+            });
+
+            $('.deleteTransaksi').click(function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener("mouseenter", Swal.stopTimer);
+                        toast.addEventListener("mouseleave", Swal.resumeTimer);
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 1000);
+                    },
+                });
+
+                Swal.fire({
+                    title: 'Hapus data ?',
+                    text: "Kamu yakin untuk menghapus " + id + " ?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "GET",
+                            url: "{{ route('deleteTransaksi', ['id' => ':id']) }}".replace(':id', id),
+                            dataType: "json",
+                            success: function(response) {
+                                // ini diambil dari controller
+                                if (response.status === 'success') {
+                                    Toast.fire({
+                                        icon: "success",
+                                        // ini diambil dari controller
+                                        title: response.message,
+                                    });
+                                    // window.location.reload()
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                // Tampilkan notifikasi error jika terjadi kesalahan
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Terjadi kesalahan saat menghapus data',
+                                    icon: 'error'
+                                });
+                            }
+                        });
+                    }
+                })
             });
         </script>
 @endsection

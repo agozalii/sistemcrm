@@ -26,13 +26,13 @@
             <div style="overflow-x:auto;">
                 {{-- height:300px; --}}
                 <table id="example1" class="table table-bordered table-striped"
-                    style="min-width:1500px; overflow-y: auto;">
+                    style="min-width:1200px; overflow-y: auto;">
                     <thead>
                         {{-- class="sticky-top" --}}
                         <tr style="text-align: center">
                             <th>No</th>
                             <th>Nama</th>
-                            <th>nama Gift</th>
+                            <th>Nama Gift</th>
                             <th>Tanggal Klaim</th>
                             <th>Tanggal Konfirmasi</th>
                             <th>Status</th>
@@ -100,7 +100,7 @@
                 });
             });
         </script>
-    
+
         <script>
             function klaimGift(id, name) {
                 Swal.fire({
@@ -131,7 +131,7 @@
                     }
                 });
             }
-    
+
             function rejectGift(id, name) {
                 Swal.fire({
                     title: 'Konfirmasi',

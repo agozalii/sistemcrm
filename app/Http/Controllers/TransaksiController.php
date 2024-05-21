@@ -217,9 +217,16 @@ class TransaksiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(TransaksiModel $produk, $id)
     {
-        //
+        $data = TransaksiModel::find($id);
+        $data->delete();
+        // Alert :: toast('Data Berhasil Dihapus', 'success');
+        //  return redirect('/produk');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil Menghapus Data',
+        ]);
     }
 
     public function addTransaksi()
@@ -334,4 +341,5 @@ class TransaksiController extends Controller
             return response()->json(['error' => 'User not found'], 404);
         }
     }
+
 }

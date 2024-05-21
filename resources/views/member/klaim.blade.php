@@ -21,11 +21,11 @@
     </style>
     <h1 class="container text-center" style="margin-top: 75px;">Klaim Gift</h1>
     <h4 class="text-center">Poin Anda : {{ $user->poin }}</h4>
-    <div class="container mb-4 mt-3 ">
+    <div class="container mb-4 mt-3">
         <div class="row col-lg-12">
             @foreach ($gifts as $gift)
                 <div class="col-md-3 mb-4 mt-1">
-                    <div class="card" style="width: 18rem;">
+                    <div class="card" style="width: 16.5rem;">
                         <form id="klaimPoinForm{{ $gift->id }}" action="{{ route('member.klaim.store') }}" method="POST">
                             @csrf
                             <input type="hidden" name="poin_cost" value="{{ $gift->poin_cost }}">

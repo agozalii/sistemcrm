@@ -5,21 +5,12 @@
 @endsection
 
 @section('content')
-    <div class="container" style="margin-top: 150px">
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <!-- Profile Button with User Icon -->
-                <a href="{{ route('profil') }}" class="btn btn-block"
-                    style="background-color: #d1d8e0; border-color: #e9ecef; color: #343a40;
-                      text-decoration: none;">
-                    <i class="fas fa-user mr-2" style="color: #148E8E"></i> Profile
-                </a>
-                <a href="#" class="btn btn-block"
-                    style="background-color: #d1d8e0; border-color: #e9ecef; color: #343a40;
-                      text-decoration: none;">
-                    <i class="fas fa-user mr-2" style="color: #148E8E"></i> Record
-                </a>
-            </div>
+    <div class="container" style="margin-top: 75px">
+        <div class="page-hero">
+            <h1 style="text-align: center; margin-bottom:30px;">Profil</h1>
+        </div>
+        <div class="row justify-content-center">
+
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">

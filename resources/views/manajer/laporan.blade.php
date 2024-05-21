@@ -1,7 +1,7 @@
 @extends('layout.main')
 
 @section('judul')
-    Halaman Data Laporan Kritik dan Saran
+        Laporan Umpan Balik
 @endsection
 
 @section('isi')

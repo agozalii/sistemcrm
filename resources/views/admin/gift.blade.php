@@ -15,6 +15,17 @@
 
                     </button>
                 </div>
+                <div class="col-md-6">
+                    <form action="{{ route('member.index') }}" method="GET" class="form-inline float-right">
+                        <a href="{{ route('member.index') }}" class="btn btn-link ml-2">
+                            <i class="fas fa-sync-alt"></i>
+                        </a>
+                        <input type="text" name="query" class="form-control mr-2" placeholder="Cari produk..."
+                            value="{{ $query ?? '' }}">
+                        <button type="submit" class="btn btn-primary">Cari</button>
+
+                    </form>
+                </div>
             </div>
 
             @if ($message = Session::get('success'))
@@ -24,16 +35,16 @@
             @endif
             <div style="overflow-x:auto;">
                 {{-- height:300px; --}}
-                <table id="example1" class="table table-bordered table-striped" style="min-width:1500px; overflow-y: auto;">
+                <table id="example1" class="table table-bordered table-striped" style="min-width:1300px; overflow-y: auto;">
                     <thead>
                         {{-- class="sticky-top" --}}
                         <tr style="text-align: center">
                             <th>No</th>
-                            <th>Nama </th>
+                            <th style="width: 400px">Nama </th>
                             <th>Gambar </th>
                             <th>Poin Tukar</th>
                             <th>Stock</th>
-                            <th style="width: 300px">Deskripsi</th>
+                            <th style="width: 400px">Deskripsi</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -64,10 +75,32 @@
                     </tbody>
                 </table>
             </div>
+            <div class="d-flex justify-content-center" style="margin-top: 20px;">
+                <ul class="pagination">
+                    <li class="page-item">
+                        @if ($data->previousPageUrl())
+                            <a href="{{ $data->previousPageUrl() }}" class="page-link">&laquo; Sebelumnya</a>
+                        @else
+                            <span class="page-link disabled ">&laquo; Sebelumnya</span>
+                        @endif
+                    </li>
+
+                    <li class="page-item">
+                        @if ($data->nextPageUrl())
+                            <a href="{{ $data->nextPageUrl() }}" class="page-link">Berikutnya &raquo;</a>
+                        @else
+                            <span class="page-link disabled">Berikutnya &raquo;</span>
+                        @endif
+                    </li>
+                </ul>
+            </div>
+
+            <p class="text-center">Menampilkan {{ $data->firstItem() }} - {{ $data->lastItem() }}, dari total
+                {{ $data->total() }}</p>
         </div>
         <div class="tampilData" style="display:none;"></div>
         <div class="tampilEditData" style="display:none;"></div>
-        <script>
+        {{-- <script>
             $(document).ready(function () {
                 $('#example1').DataTable({
                     dom: 'Blfrtip',
@@ -81,7 +114,7 @@
                     lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
                 });
             });
-        </script>
+        </script> --}}
 
         <script>
             $('#addDataGift').click(function(e) {

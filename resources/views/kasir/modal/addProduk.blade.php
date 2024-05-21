@@ -9,7 +9,7 @@
             <form action="{{ route('addData') }}" enctype="multipart/form-data" method="POST">
                 @csrf
                 <div class="modal-body">
-                    <div class="mb-3 row">
+                    <div class="mb-1 row">
                         <label class="col-sm-5 col-form-label">Id Produk</label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control-plaintext" id="id" name="id"
