@@ -11,6 +11,7 @@ use App\Http\Controllers\KritikSaranController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ManajerDashboardController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PoinController;
 use App\Http\Controllers\PoinLoyalitasController;
@@ -143,6 +144,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('laporan', LaporanController::class);
         Route::get('/manajer/laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
         Route::get('/manajer/laporanklaim', [LaporanController::class, 'laporanklaim'])->name('laporanklaim');
+
+        Route::get('/manajer/dashboard', [ManajerDashboardController::class, 'index'])->name('manajer.dashboard');
     });
 
     // Route::group(['middleware' => ['cekUserLogin:mem']], function(){

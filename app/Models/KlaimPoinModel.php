@@ -23,6 +23,6 @@ class KlaimPoinModel extends Model
 
     public function gift()
     {
-        return $this->belongsTo(GiftModel::class);
+        return $this->belongsTo(GiftModel::class, 'gift_id', 'id');
     }
 }

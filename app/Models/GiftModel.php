@@ -20,6 +20,6 @@ class GiftModel extends Model
     
     public function klaimPoins()
     {
-        return $this->hasMany(KlaimPoinModel::class);
+        return $this->hasMany(KlaimPoinModel::class, 'gift_id', 'id');
     }
 }

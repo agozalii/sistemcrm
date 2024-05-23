@@ -1,4 +1,14 @@
+@if ($user->role == 'manajer')
 <li class="nav-item">
+    <a href="{{ route('manajer.dashboard') }}" class="nav-link">
+      <i class="nav-icon far fa-image"></i>
+      <p>
+        Beranda
+      </p>
+    </a>
+  </li>
+  @else
+  <li class="nav-item">
     <a href="{{ url('home') }}" class="nav-link">
       <i class="nav-icon far fa-image"></i>
       <p>
@@ -6,6 +16,8 @@
       </p>
     </a>
   </li>
+  @endif
+
 
   @if ($user->role == 'admin')
 
