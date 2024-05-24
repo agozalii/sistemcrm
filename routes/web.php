@@ -111,6 +111,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/admin/updateGift/{id}', [GiftController::class, 'update'])->name('updateGift');
         Route::get('/admin/deleteGift/{id}', [GiftController::class, 'destroy'])->name('deleteGift');
 
+        Route::resource('laporan', LaporanController::class);
+        Route::get('/admin/laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
+        Route::get('/admin/laporanklaim', [LaporanController::class, 'laporanklaim'])->name('laporanklaim');
+
+        Route::get('/admin/dashboard', [ManajerDashboardController::class, 'index'])->name('manajer.dashboard');
+
 
 
         Route::resource('klaimpoin', KlaimPoinController::class);
@@ -141,11 +147,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['middleware' => ['cekUserLogin:manajer']], function () {
-        Route::resource('laporan', LaporanController::class);
-        Route::get('/manajer/laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
-        Route::get('/manajer/laporanklaim', [LaporanController::class, 'laporanklaim'])->name('laporanklaim');
 
-        Route::get('/manajer/dashboard', [ManajerDashboardController::class, 'index'])->name('manajer.dashboard');
     });
 
     // Route::group(['middleware' => ['cekUserLogin:mem']], function(){

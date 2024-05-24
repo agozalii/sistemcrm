@@ -69,14 +69,22 @@
       </p>
     </a>
   </li>
-  {{-- <li class="nav-item">
-    <a href="{{ url('laporan') }}" class="nav-link">
-      <i class="nav-icon far fa-image"></i>
-      <p>
-      Laporan
-      </p>
-    </a>
-  </li> --}}
+  <li class="nav-item">
+      <a href="{{ url('laporan') }}" class="nav-link">
+          <i class="nav-icon far fa-image"></i>
+          <p>
+              Laporan Umpan Balik
+          </p>
+      </a>
+  </li>
+  <li class="nav-item">
+      <a href="{{ url('/admin/laporanklaim') }}" class="nav-link">
+          <i class="nav-icon far fa-image"></i>
+          <p>
+              Laporan Klaim Poin
+          </p>
+      </a>
+  </li>
 
   @elseif ($user->role == 'kasir')
   <li class="nav-item">
@@ -145,20 +153,5 @@
     </a>
   </li> --}}
   @elseif ($user->role == 'manajer')
-  <li class="nav-item">
-    <a href="{{ url('laporan') }}" class="nav-link">
-      <i class="nav-icon far fa-image"></i>
-      <p>
-      Laporan Umpan Balik
-      </p>
-    </a>
-  </li>
-  <li class="nav-item">
-    <a href="{{ url('/manajer/laporanklaim') }}" class="nav-link">
-      <i class="nav-icon far fa-image"></i>
-      <p>
-      Laporan Klaim Poin
-      </p>
-    </a>
-  </li>
+
   @endif

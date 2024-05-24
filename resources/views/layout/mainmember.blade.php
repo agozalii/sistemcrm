@@ -158,59 +158,53 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+
+    <nav class="navbar navbar-expand-lg navbar-success fixed-top" style="background-color: #10936a">
         <div class="container">
-            <a class="navbar-brand" href="#">Forester Jakal</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </nav>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">Forester Jakal</a>
+            <a class="navbar-brand" href="#">
+                <img src="{{url('/image/logo.png')}}"  alt="logo" />
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse text-light" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item ">
-                        <a class="nav-link " style="color: #303030" href="{{ url('/member/dashboard') }}">Beranda</a>
+                        <a class="nav-link " href="{{ url('/member/dashboard') }}">Beranda</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link ml-4" style="color: #303030" href="{{ route('rekomendasi') }}">Rekomendasi</a>
+                        <a class="nav-link ml-4" href="{{ route('rekomendasi') }}">Rekomendasi</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link ml-4" style="color: #303030" href="{{ route('poin') }}">Poin</a>
+                        <a class="nav-link ml-4" href="{{ route('poin') }}">Poin</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link ml-4" style="color: #303030" href="{{ route('member.statusklaim') }}">Status Klaim</a>
+                        <a class="nav-link ml-4" href="{{ route('member.statusklaim') }}">Status Klaim</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link ml-4" style="color: #303030" href="{{ url('/member/kritiksaran') }}">Kritik Saran</a>
+                        <a class="nav-link ml-4" href="{{ url('/member/kritiksaran') }}">Kritik Saran</a>
                     </li>
                     {{-- <li class="nav-item ">
-                        <a class="nav-link ml-4" style="color: #303030" href="{{ url('/member/tentangkami') }}">Tentang Kami</a>
+                        <a class="nav-link ml-4" href="{{ url('/member/tentangkami') }}">Tentang Kami</a>
                     </li> --}}
                     <li class="nav-item ">
-                        <a class="nav-link ml-4" style="color: #303030" href="{{ url('/member/profil') }}">Profil</a>
+                        <a class="nav-link ml-4" href="{{ url('/member/profil') }}">Profil</a>
                     </li>
                     </li>
                     @if(Auth::user() && Auth::user()->role != 'member')
                     <li class="nav-item ">
-                        <a class="nav-link ml-4" style="color: #303030" href="{{ url('/home') }}">Admin</a>
+                        <a class="nav-link ml-4" href="{{ url('/home') }}">Admin</a>
                     </li>
                     @endif
                     <li class="nav-item ">
                         @if(Auth::user() && Auth::user()->id != '')
-                        <a class="ml-4 btn btn-primary btn-sm text-white" href="{{ url('logout') }}" role="button" style="color: #303030">
+                        <a class="ml-4 btn btn-info btn-sm text-white" href="{{ url('logout') }}" role="button">
                            <i class="nav-icon fas fa-user-circle mr-2"></i> Logout
                         </a>
                         @else
-                        <a class="ml-4 btn btn-primary btn-sm text-white" href="{{ url('login') }}" role="button" style="color: #303030">
+                        <a class="ml-4 btn btn-info btn-sm text-white" href="{{ url('login') }}" role="button">
                            <i class="nav-icon fas fa-user-circle mr-2"></i> Login
                         </a>
                         @endif

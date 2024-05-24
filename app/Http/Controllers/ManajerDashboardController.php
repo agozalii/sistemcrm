@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DetailTransaksiModel;
 use App\Models\GiftModel;
 use App\Models\KlaimPoinModel;
+use App\Models\KritikSaranModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -45,6 +46,12 @@ class ManajerDashboardController extends Controller
                     $memberLoyal = $user->nama;
                 }
             }
+
+            $kritikSarans = KritikSaranModel::query()
+                ->whereBetween('created_at', [$tgl_awal, $tgl_akhir])
+                ->orderBy('created_at', 'desc')
+                ->limit(10)
+                ->get();
         } else {
             $gifts = GiftModel::with('klaimPoins')->get();
 
@@ -68,6 +75,11 @@ class ManajerDashboardController extends Controller
                     $memberLoyal = $user->nama;
                 }
             }
+
+            $kritikSarans = KritikSaranModel::query()
+                ->orderBy('created_at', 'desc')
+                ->limit(10)
+                ->get();
         }
         // dd($topUser);
 
@@ -76,6 +88,7 @@ class ManajerDashboardController extends Controller
             'tgl_akhir' => $tgl_akhir,
             'grafikGift' => $grafikGift,
             'memberLoyal' => $memberLoyal,
+            'kritikSarans' => $kritikSarans,
             'user' => auth()->user()
         ]);
     }
