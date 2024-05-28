@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="modal fade" id="detail-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -13,13 +14,36 @@
                 <button type="button" id="btn-accept" class="btn btn-primary">Selanjutnya</button>
             </div>
         </div>
+=======
+<div class="modal fade show" id="detail-modal"  aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Detail transaksi</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div id="content-modal" class="modal-body">
+
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="btn-accept" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+
+>>>>>>> d9ec6c2f57a6bfb23bf14abd0b3198156447c341
     </div>
 </div>
 
 
+<<<<<<< HEAD
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+=======
+>>>>>>> d9ec6c2f57a6bfb23bf14abd0b3198156447c341
 <script>
     function showModal() {
         const jumlahBeliInputs = document.querySelectorAll('input[name="jumlah_beli_produk[]"]');
@@ -118,6 +142,12 @@
 
             document.getElementById('content-modal').innerHTML = modalContent;
         }
+<<<<<<< HEAD
 
     }
 </script>
+=======
+        
+    }
+</script>
+>>>>>>> d9ec6c2f57a6bfb23bf14abd0b3198156447c341

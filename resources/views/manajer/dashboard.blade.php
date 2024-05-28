@@ -85,13 +85,21 @@ Dashboard
             // Konfigurasi chart
             const ctx = document.getElementById('giftChart').getContext('2d');
             const giftChart = new Chart(ctx, {
+<<<<<<< HEAD
                 type: 'pie',
+=======
+                type: 'bar',
+>>>>>>> d9ec6c2f57a6bfb23bf14abd0b3198156447c341
                 data: {
                     labels: giftNames,
                     datasets: [{
                         label: 'Gift Terklaim',
                         data: useCount,
+<<<<<<< HEAD
                         backgroundColor: ['#03AED2','#FF0000','#97BE5A','#028391','#AF8F6F','#D2649A','#E6FF94'],
+=======
+                        backgroundColor: '#03AED2',
+>>>>>>> d9ec6c2f57a6bfb23bf14abd0b3198156447c341
                         borderColor: '#4D869C',
                         borderWidth: 1
                     }]

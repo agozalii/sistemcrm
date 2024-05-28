@@ -1,6 +1,10 @@
 @if ($user->role == 'manajer')
 <li class="nav-item">
+<<<<<<< HEAD
     <a href="{{ url('/manajer/dashboard') }}" class="nav-link">
+=======
+    <a href="{{ route('manajer.dashboard') }}" class="nav-link">
+>>>>>>> d9ec6c2f57a6bfb23bf14abd0b3198156447c341
       <i class="nav-icon far fa-image"></i>
       <p>
         Beranda

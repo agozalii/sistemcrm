@@ -40,7 +40,11 @@
 
         <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #119395">
             <a href="{{ asset('/') }}index3.html" class="brand-link">
+<<<<<<< HEAD
                 <img style="height: 23px;" src="{{ asset('/') }}image/logo.png" class="brand-image mt-4">
+=======
+                <img src="{{ asset('/') }}image/logo.png" class="brand-image mb-4 mt-4 bg-light">
+>>>>>>> d9ec6c2f57a6bfb23bf14abd0b3198156447c341
             </a>
             <div class="sidebar">
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">

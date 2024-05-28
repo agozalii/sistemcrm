@@ -115,6 +115,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/admin/laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
         Route::get('/admin/laporanklaim', [LaporanController::class, 'laporanklaim'])->name('laporanklaim');
 
+<<<<<<< HEAD
+=======
+        Route::get('/admin/dashboard', [ManajerDashboardController::class, 'index'])->name('manajer.dashboard');
+>>>>>>> d9ec6c2f57a6bfb23bf14abd0b3198156447c341
 
 
 
@@ -146,7 +150,10 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['middleware' => ['cekUserLogin:manajer']], function () {
+<<<<<<< HEAD
         Route::get('/manajer/dashboard', [ManajerDashboardController::class, 'index'])->name('manajer.dashboard');
+=======
+>>>>>>> d9ec6c2f57a6bfb23bf14abd0b3198156447c341
 
     });
 
