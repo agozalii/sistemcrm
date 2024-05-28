@@ -130,31 +130,6 @@ body {
     width: 75px;
     height: 75px;
 }
-
-<<<<<<< HEAD
-=======
-        .navbar-nav .nav-link.active {
-            font-weight: bold;
-        }
-        .whatsapp-float {
-        position: fixed;
-        width: 85px;
-        height: 85px;
-        bottom: 40px;
-        right: 40px;
-        border-radius: 85px;
-        text-align: center;
-        z-index: 1000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .whatsapp-icon {
-        width: 75px;
-        height:75px;
-}
->>>>>>> d9ec6c2f57a6bfb23bf14abd0b3198156447c341
     </style>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -176,19 +151,7 @@ body {
                 <img style="height: 30px; display: inline-block; vertical-align: middle;" src="{{url('/image/forester.png')}}" alt="logo" />
                 <img style="height: 30px; display: inline-block; vertical-align: middle;" src="{{url('/image/cnsnlogo.png')}}" alt="logo" />
             </a>
-
-<<<<<<< HEAD
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-=======
-
-    <nav class="navbar navbar-expand-lg navbar-success fixed-top" style="background-color: #10936a">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="{{url('/image/logo.png')}}"  alt="logo" />
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
->>>>>>> d9ec6c2f57a6bfb23bf14abd0b3198156447c341
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -209,17 +172,8 @@ body {
                     <li class="nav-item ">
                         <a class="nav-link ml-4" href="{{ url('/member/kritiksaran') }}">Kritik Saran</a>
                     </li>
-<<<<<<< HEAD
                     <li class="nav-item ">
                         <a class="nav-link ml-4" href="{{ url('/member/profil') }}">Profil</a>
-=======
-                    {{-- <li class="nav-item ">
-                        <a class="nav-link ml-4" href="{{ url('/member/tentangkami') }}">Tentang Kami</a>
-                    </li> --}}
-                    <li class="nav-item ">
-                        <a class="nav-link ml-4" href="{{ url('/member/profil') }}">Profil</a>
-                    </li>
->>>>>>> d9ec6c2f57a6bfb23bf14abd0b3198156447c341
                     </li>
                     @if(Auth::user() && Auth::user()->role != 'member')
                     <li class="nav-item ">
@@ -228,19 +182,12 @@ body {
                     @endif
                     <li class="nav-item ">
                         @if(Auth::user() && Auth::user()->id != '')
-<<<<<<< HEAD
-                        <a class="ml-4 mt-1 btn btn-primary btn-sm text-white" href="{{ url('logout') }}" role="button">
+
+                        <a class="ml-4 btn btn-info btn-sm text-white mt-2" href="{{ url('logout') }}" role="button">
                            <i class="nav-icon fas fa-user-circle mr-2"></i> Logout
                         </a>
                         @else
-                        <a class="ml-4 mt-1 btn btn-primary btn-sm text-white" href="{{ url('login') }}" role="button">
-=======
-                        <a class="ml-4 btn btn-info btn-sm text-white" href="{{ url('logout') }}" role="button">
-                           <i class="nav-icon fas fa-user-circle mr-2"></i> Logout
-                        </a>
-                        @else
-                        <a class="ml-4 btn btn-info btn-sm text-white" href="{{ url('login') }}" role="button">
->>>>>>> d9ec6c2f57a6bfb23bf14abd0b3198156447c341
+                        <a class="ml-4 btn btn-info btn-sm text-white mt-2" href="{{ url('login') }}" role="button">
                            <i class="nav-icon fas fa-user-circle mr-2"></i> Login
                         </a>
                         @endif
@@ -251,9 +198,6 @@ body {
     </nav>
     <a href="https://chat.whatsapp.com/Kcz49aF78QsJQtSMAgFhf0" class="whatsapp-float" target="_blank">
         <img src="{{ url('storage/aset/logowa.png') }}" alt="WhatsApp" class="whatsapp-icon">
-<<<<<<< HEAD
-    </a>
-=======
 </a>
 
     {{-- <nav class="navbar navbar-light bg-light sticky-top" style="border-bottom: 1px solid #dee2e6;">

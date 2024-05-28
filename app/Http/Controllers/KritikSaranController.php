@@ -60,12 +60,14 @@ class KritikSaranController extends Controller
         // Validasi data jika diperlukan
         $request->validate([
             'isi_kritiksaran' => 'required',
+            'kepuasan' => 'required',
         ]);
 
         // Simpan kritik dan saran
         KritikSaranModel::create([
             'user_id' => auth()->user()->id, // Ambil ID pengguna yang sedang login
             'isi_kritiksaran' => $request->isi_kritiksaran,
+            'kepuasan' => $request->kepuasan,
             'tgl_kirim' => now(), // Tanggal dan waktu saat ini
         ]);
 

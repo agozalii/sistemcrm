@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->text('isi_kritiksaran');
+            $table->integer('kepuasan');
             $table->timestamps();
             $table->date('tgl_kirim');
         });

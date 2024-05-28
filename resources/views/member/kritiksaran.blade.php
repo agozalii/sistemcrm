@@ -26,6 +26,29 @@
                                                     <label for="isi_kritiksaran" class="form-label">Kritik dan Saran dari Anda Sangat Berharga Bagi Kami</label>
                                                     <textarea name="isi_kritiksaran" class="form-control" id="isi_kritiksaran" rows="11" placeholder="Tuliskan Kritik dan Saran Anda Disini!!!"></textarea>
                                                 </div>
+                                                <label for="kepuasan" class="form-label">Kepuasan Anda</label>
+                                                <div class="mb-3">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" id="inlineCheckbox1" name="kepuasan" value="1">
+                                                        <label class="form-check-label" for="inlineCheckbox1">Sangat Kurang</label>
+                                                      </div>
+                                                      <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" id="inlineCheckbox2" name="kepuasan"  value="2">
+                                                        <label class="form-check-label" for="inlineCheckbox2">Kurang</label>
+                                                      </div>
+                                                      <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" id="inlineCheckbox3" name="kepuasan"  value="3">
+                                                        <label class="form-check-label" for="inlineCheckbox3">Cukup</label>
+                                                      </div>
+                                                      <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" id="inlineCheckbox4" name="kepuasan"  value="4">
+                                                        <label class="form-check-label" for="inlineCheckbox4">Baik</label>
+                                                      </div>
+                                                      <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" id="inlineCheckbox5" name="kepuasan"  value="5">
+                                                        <label class="form-check-label" for="inlineCheckbox5">Sangat Baik</label>
+                                                      </div>
+                                                </div>
                                                 <button type="submit" class="btn btn-primary">Kirim</button>
 
                                                 {{-- <button style="background-color: #B1D8D8; " class="btn btn-success mb-3" type="submit">

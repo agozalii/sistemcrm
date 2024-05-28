@@ -44,7 +44,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="total_transaksi" class="form-label">Total Transaksi</label>
-                            <input type="text" class="form-control" id="total_transaksi" name="total_transaksi" readonly>
+                            <input type="text" class="form-control mb-1" id="total_transaksi" name="total_transaksi" readonly>
                         </div>
                         <div class="form-group">
                             <label for="poin_diperoleh" class="form-label">Poin Diperoleh</label>

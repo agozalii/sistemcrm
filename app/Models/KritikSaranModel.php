@@ -16,6 +16,7 @@ class KritikSaranModel extends Model
         'id',
         'user_id',
         'isi_kritiksaran',
+        'kepuasan',
         'tgl_kirim',
     ];
 
