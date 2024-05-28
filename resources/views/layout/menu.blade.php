@@ -1,4 +1,14 @@
+@if ($user->role == 'manajer')
 <li class="nav-item">
+    <a href="{{ url('/manajer/dashboard') }}" class="nav-link">
+      <i class="nav-icon far fa-image"></i>
+      <p>
+        Beranda
+      </p>
+    </a>
+  </li>
+  @else
+  <li class="nav-item">
     <a href="{{ url('home') }}" class="nav-link">
       <i class="nav-icon far fa-image"></i>
       <p>
@@ -6,6 +16,8 @@
       </p>
     </a>
   </li>
+  @endif
+
 
   @if ($user->role == 'admin')
 
@@ -25,14 +37,14 @@
       </p>
     </a>
   </li>
-  <li class="nav-item">
+  {{-- <li class="nav-item">
     <a href="{{ url('transaksi') }}" class="nav-link">
       <i class="nav-icon far fa-image"></i>
       <p>
       Transaksi
       </p>
     </a>
-  </li>
+  </li> --}}
   <li class="nav-item">
     <a href="{{ url('gift') }}" class="nav-link">
       <i class="nav-icon far fa-image"></i>
@@ -58,12 +70,20 @@
     </a>
   </li>
   <li class="nav-item">
-    <a href="{{ url('laporan') }}" class="nav-link">
-      <i class="nav-icon far fa-image"></i>
-      <p>
-      Laporan
-      </p>
-    </a>
+      <a href="{{ url('laporan') }}" class="nav-link">
+          <i class="nav-icon far fa-image"></i>
+          <p>
+              Laporan Umpan Balik
+          </p>
+      </a>
+  </li>
+  <li class="nav-item">
+      <a href="{{ url('/admin/laporanklaim') }}" class="nav-link">
+          <i class="nav-icon far fa-image"></i>
+          <p>
+              Laporan Klaim Poin
+          </p>
+      </a>
   </li>
 
   @elseif ($user->role == 'kasir')
@@ -75,8 +95,22 @@
       </p>
     </a>
   </li>
-
-
+  <li class="nav-item">
+    <a href="{{ url('/kasir/transaksi/tambah') }}" class="nav-link">
+      <i class="nav-icon far fa-image"></i>
+      <p>
+      Input Transaksi
+      </p>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a href="{{ url('/kasir/transaksi') }}" class="nav-link">
+      <i class="nav-icon far fa-image"></i>
+      <p>
+      History Transaksi
+      </p>
+    </a>
+  </li>
   {{-- @elseif ($user->role == 'member')
   <li class="nav-item">
     <a href="{{ url('klasifikasigunung') }}" class="nav-link">
@@ -119,12 +153,5 @@
     </a>
   </li> --}}
   @elseif ($user->role == 'manajer')
-  <li class="nav-item">
-    <a href="{{ url('laporan') }}" class="nav-link">
-      <i class="nav-icon far fa-image"></i>
-      <p>
-      Laporan
-      </p>
-    </a>
-  </li>
+
   @endif

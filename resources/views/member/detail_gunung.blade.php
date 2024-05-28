@@ -148,26 +148,22 @@
                                 <tr>
                                     <td style="padding-left: 20px;">Ketinggian</td>
                                     <td>:</td>
-                                    <td style="padding-left: 10px;"><strong
-                                            style="color: #148E8E;">{{ $gunung->ketinggian }}</strong></td>
+                                    <td style="padding-left: 10px;">{{ $gunung->ketinggian }}</td>
                                 </tr>
                                 <tr>
                                     <td style="padding-left: 20px;">Kesulitan</td>
                                     <td>:</td>
-                                    <td style="padding-left: 10px;"><strong
-                                            style="color: #148E8E;">{{ $gunung->kesulitan }}</strong></td>
+                                    <td style="padding-left: 10px;">{{ $gunung->kesulitan }}</td>
                                 </tr>
                                 <tr>
                                     <td style="padding-left: 20px;">Lama Pendakian</td>
                                     <td>:</td>
-                                    <td style="padding-left: 10px;"><strong
-                                            style="color: #148E8E;">{{ $gunung->lama_pendakian }}</strong></td>
+                                    <td style="padding-left: 10px;">{{ $gunung->lama_pendakian }}</td>
                                 </tr>
                                 <tr>
                                     <td style="padding-left: 20px;">Suhu</td>
                                     <td>:</td>
-                                    <td style="padding-left: 10px;"><strong
-                                            style="color: #148E8E;">{{ $gunung->suhu }}</strong></td>
+                                    <td style="padding-left: 10px;">{{ $gunung->suhu }}</td>
                                 </tr>
                             </tbody>
                         </table>

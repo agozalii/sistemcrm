@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreKritikSaranRequest;
 use App\Models\KritikSaranModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class KritikSaranController extends Controller
 {
@@ -14,6 +15,14 @@ class KritikSaranController extends Controller
     public function index()
     {
         return view('member.kritiksaran');
+    }
+    public function umpanbalik()
+    {
+        $data = KritikSaranModel::with('user')->get();
+
+        return view("admin.KritikSaran", compact('data'))->with([
+            'user' => Auth::user()
+        ]);
     }
 
 
@@ -91,8 +100,13 @@ class KritikSaranController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(KritikSaranModel $kritiksaran, $id)
     {
-        //
+        $data = KritikSaranModel::find($id);
+        $data->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil Menghapus Data',
+        ]);
     }
 }

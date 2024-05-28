@@ -26,10 +26,11 @@
                                                     <label for="isi_kritiksaran" class="form-label">Kritik dan Saran dari Anda Sangat Berharga Bagi Kami</label>
                                                     <textarea name="isi_kritiksaran" class="form-control" id="isi_kritiksaran" rows="11" placeholder="Tuliskan Kritik dan Saran Anda Disini!!!"></textarea>
                                                 </div>
+                                                <button type="submit" class="btn btn-primary">Kirim</button>
 
-                                                <button style="background-color: #B1D8D8; " class="btn btn-success mb-3" type="submit">
-                                                    <span style="color:black"> Kirim </span>
-                                                </button>
+                                                {{-- <button style="background-color: #B1D8D8; " class="btn btn-success mb-3" type="submit">
+                                                    <span class="btn btn-primary"> Kirim </span>
+                                                </button> --}}
                                             </form>
                                         </div>
                                     </div>

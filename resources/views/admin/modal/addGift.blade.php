@@ -12,26 +12,32 @@
                     <div class="mb-3 row">
                         <label class="col-sm-5 col-form-label">Nama Gift</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="nama_gift" name="nama_gift" value="">
+                            <input type="text" class="form-control" id="nama_gift" name="nama_gift" required>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label class="col-sm-5 col-form-label">Gambar Gift</label>
                         <div class="col-sm-7">
                             <input class="form-control " type="file" accept=".png, .jpg, .jpeg" id="gambar_gift"
-                                name="gambar_gift" onchange="previewImg()">
+                                name="gambar_gift" onchange="previewImg()" required>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label class="col-sm-5 col-form-label">Poin</label>
                         <div class="col-sm-7">
-                            <input type="number" class="form-control" id="poin_cost" name="poin_cost" value="">
+                            <input type="number" class="form-control" id="poin_cost" name="poin_cost" required>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-5 col-form-label">Stock</label>
+                        <div class="col-sm-7">
+                            <input type="number" class="form-control" id="stock" name="stock" required>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label class="col-sm-5 col-form-label">Deskripsi</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="deskripsi" name="deskripsi" value="">
+                            <input type="text" class="form-control" id="deskripsi" name="deskripsi" required>
                         </div>
                     </div>
                 </div>

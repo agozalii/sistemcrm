@@ -7,123 +7,130 @@
     <title>@yield('title')</title>
     <style>
         /* CSS Styling for Navbar and Carousel */
-        .navbar {
-            /* background-color: #148E8E;
-            opacity: 32%; */
-            background-color: rgba(20, 142, 142, 0.32);
-        }
+        /* CSS Styling for Navbar and Carousel */
+.navbar {
+    background-color: rgb(11, 142, 138);
+}
 
-        .navbar-scrolled {
-            background-color: #7FC3C3;
-            /* Warna latar belakang tanpa opacity */
-        }
+.navbar-scrolled {
+    background-color: #7FC3C3;
+}
 
-        .navbar-brand {
-            color: #fff;
-            font-size: 25px;
-            text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
+.navbar-brand {
+    color: #fff;
+    font-size: 25px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
 
-        .navbar-nav .nav-link {
-            color: #fff;
-            padding: .2rem 1rem;
-        }
+.navbar-nav .nav-link {
+    color: #fff; /* Warna default putih */
+}
 
-        .navbar-nav .active>.nav-link,
-        .navbar-nav .nav-link.active,
-        .navbar-nav .nav-link.show,
-        .navbar-nav .show>.nav-link {
-            color: #fff;
-        }
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active:hover {
+    color: #1e403c; /* Warna saat di-hover (hijau) */
+}
 
-        .navbar-toggler {
-            background: #fff;
-            padding: 1px 5px;
-            font-size: 18px;
-            line-height: 0.3;
-        }
+.navbar-nav .nav-link.active {
+    color: #4f8f88; /* Warna saat item aktif (hitam) */
+}
 
-        .navbar-light .navbar-nav .nav-link:focus,
-        .navbar-light .navbar-nav .nav-link:hover {
-            color: #fff;
-        }
+.navbar-toggler {
+    background: #fff;
+    padding: 1px 5px;
+    font-size: 18px;
+    line-height: 0.3;
+}
 
-        .carousel-item {
-            width: 100%;
-            height: 90vh;
-            min-height: 300px;
-            background: no-repeat center center scroll;
-            background-size: cover;
-        }
+.carousel-item {
+    width: 100%;
+    height: 90vh;
+    min-height: 300px;
+    background: no-repeat center center scroll;
+    background-size: cover;
+}
 
-        .carousel-caption {
-            bottom: 270px;
-        }
+.carousel-caption {
+    bottom: 270px;
+}
 
-        .carousel-caption h5 {
-            font-size: 45px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 25px;
-        }
+.carousel-caption h5 {
+    font-size: 45px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 25px;
+}
 
-        .carousel-caption p {
-            width: 75%;
-            margin: auto;
-            font-size: 18px;
-            line-height: 1.9;
-        }
+.carousel-caption p {
+    width: 75%;
+    margin: auto;
+    font-size: 18px;
+    line-height: 1.9;
+}
 
-        .about-us {
-            background-color: #f8f9fa;
-            /* Background color for About Us section */
-            padding: 50px 0;
-        }
+.about-us {
+    background-color: #f8f9fa;
+    padding: 50px 0;
+}
 
-        .about-us h2 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+.about-us h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
 
-        .about-us p {
-            text-align: center;
-            font-size: 20px;
-            line-height: 1.6;
-        }
+.about-us p {
+    text-align: center;
+    font-size: 20px;
+    line-height: 1.6;
+}
 
-        body {
-            font-family: "Times New Roman", Times, serif;
+body {
+    font-family: "Times New Roman", Times, serif;
+}
 
-            /* Menggunakan Montserrat untuk seluruh teks di body */
-            /* Ukuran font default */
-        }
+.navbar {
+    box-shadow: 0px 2px 4px rgba(176, 142, 142, 0.1);
+}
 
-        .navbar {
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-            /* Tambahkan bayangan dengan warna rgba(0, 0, 0, 0.1) */
-        }
+.navbar-brand,
+.nav-link {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 14px;
+}
 
-        .navbar-brand,
-        .nav-link {
-            font-family: "Times New Roman", Times, serif;
-            /* Menggunakan Montserrat untuk teks di navbar */
-            font-size: 14px;
-            /* Ukuran font untuk navbar */
-        }
+.welcome-message {
+    background-color: #ffffff;
+    color: #1C5C58;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #1C5C58;
+}
 
-        .welcome-message {
-            background-color: #ffffff;
-            color: #1C5C58;
-            padding: 5px;
-            text-align: center;
-            border: 1px solid #1C5C58;
-        }
+.navbar-nav .nav-link.active {
+    font-weight: bold;
+}
 
-        .navbar-nav .nav-link.active {
-            font-weight: bold;
-        }
+.whatsapp-float {
+    position: fixed;
+    width: 85px;
+    height: 85px;
+    bottom: 40px;
+    right: 40px;
+    border-radius: 85px;
+    text-align: center;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.whatsapp-icon {
+    width: 75px;
+    height: 75px;
+}
+
     </style>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -139,60 +146,49 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-success fixed-top" style="background-color: #68b4a8">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img style="height: 30px; display: inline-block; vertical-align: middle;" src="{{url('/image/forester.png')}}" alt="logo" />
+                <img style="height: 30px; display: inline-block; vertical-align: middle;" src="{{url('/image/cnsnlogo.png')}}" alt="logo" />
+            </a>
 
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">Forester Jakal</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </nav>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">Forester Jakal</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse text-light" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item ">
-                        <a class="nav-link " style="color: #303030" href="{{ url('/member/dashboard') }}">Beranda</a>
+                        <a class="nav-link " href="{{ url('/member/dashboard') }}">Beranda</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link ml-4" style="color: #303030" href="{{ route('rekomendasi') }}">Rekomendasi</a>
+                        <a class="nav-link ml-4" href="{{ route('rekomendasi') }}">Rekomendasi</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link ml-4" style="color: #303030" href="{{ route('poin') }}">Poin</a>
+                        <a class="nav-link ml-4" href="{{ route('poin') }}">Poin</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link ml-4" style="color: #303030" href="{{ route('member.statusklaim') }}">Status Klaim</a>
+                        <a class="nav-link ml-4" href="{{ route('member.statusklaim') }}">Status Klaim</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link ml-4" style="color: #303030" href="{{ url('/member/kritiksaran') }}">Kritik Saran</a>
+                        <a class="nav-link ml-4" href="{{ url('/member/kritiksaran') }}">Kritik Saran</a>
                     </li>
-                    {{-- <li class="nav-item ">
-                        <a class="nav-link ml-4" style="color: #303030" href="{{ url('/member/tentangkami') }}">Tentang Kami</a>
-                    </li> --}}
                     <li class="nav-item ">
-                        <a class="nav-link ml-4" style="color: #303030" href="{{ url('/member/profil') }}">Profil</a>
-                    </li>
+                        <a class="nav-link ml-4" href="{{ url('/member/profil') }}">Profil</a>
                     </li>
                     @if(Auth::user() && Auth::user()->role != 'member')
                     <li class="nav-item ">
-                        <a class="nav-link ml-4" style="color: #303030" href="{{ url('/home') }}">Admin</a>
+                        <a class="nav-link ml-4" href="{{ url('/home') }}">Admin</a>
                     </li>
                     @endif
                     <li class="nav-item ">
                         @if(Auth::user() && Auth::user()->id != '')
-                        <a class="ml-4 btn btn-primary btn-sm text-white" href="{{ url('logout') }}" role="button" style="color: #303030">
+                        <a class="ml-4 mt-1 btn btn-primary btn-sm text-white" href="{{ url('logout') }}" role="button">
                            <i class="nav-icon fas fa-user-circle mr-2"></i> Logout
                         </a>
                         @else
-                        <a class="ml-4 btn btn-primary btn-sm text-white" href="{{ url('login') }}" role="button" style="color: #303030">
+                        <a class="ml-4 mt-1 btn btn-primary btn-sm text-white" href="{{ url('login') }}" role="button">
                            <i class="nav-icon fas fa-user-circle mr-2"></i> Login
                         </a>
                         @endif
@@ -201,47 +197,9 @@
             </div>
         </div>
     </nav>
-
-
-    {{-- <nav class="navbar navbar-light bg-light sticky-top" style="border-bottom: 1px solid #dee2e6;">
-        <div class="container">
-            <a class="navbar-brand">FORESTER JAKAL</a>
-        </div>
-    </nav>
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-        <div class="container">
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                    </li>
-                </ul>
-            </div>
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-person-fill"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-coin"></i></a>
-                </li>
-            </ul>
-        </div>
-    </nav> --}}
-
-
-
-
-
+    <a href="https://chat.whatsapp.com/Kcz49aF78QsJQtSMAgFhf0" class="whatsapp-float" target="_blank">
+        <img src="{{ url('storage/aset/logowa.png') }}" alt="WhatsApp" class="whatsapp-icon">
+    </a>
 
     @yield('content')
 
@@ -255,18 +213,17 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
-
     <script>
         $(window).scroll(function() {
             var scroll = $(window).scrollTop();
 
-            if (scroll > 50) { // Misalkan saat user telah meng-scroll 50 piksel
-                $(".navbar").addClass("navbar-scrolled"); // Tambahkan kelas untuk navbar saat di-scroll
+            if (scroll > 50) {
+                $(".navbar").addClass("navbar-scrolled");
             } else {
-                $(".navbar").removeClass("navbar-scrolled"); // Hapus kelas untuk navbar saat di-scroll
+                $(".navbar").removeClass("navbar-scrolled");
             }
         });
+
 
         $(document).ready(function() {
             var currentUrl = window.location.href;
@@ -278,46 +235,8 @@
                     $(this).addClass('active');
                 }
             });
-
-            // Menambahkan efek hover pada teks dropdown
-            $('.nav-link').mouseenter(function() {
-                $(this).css('color', '#14534F'); // Mengubah warna teks saat hover
-            });
-            $('.nav-link').mouseleave(function() {
-                $(this).css('color', '#303030'); // Mengembalikan warna teks ke aslinya saat tidak hover
-            });
-            $('.dropdown-item').mouseenter(function() {
-                $(this).css('color', '#14534F'); // Mengubah warna teks saat hover
-            });
-
-            $('.dropdown-item').mouseleave(function() {
-                $(this).css('color', ''); // Mengembalikan warna teks ke aslinya saat tidak hover
-            });
-
-            // Script untuk dropdown menu
-            $('.nav-link.dropdown-toggle').mouseenter(function() {
-                $(this).addClass('show');
-                $(this).next('.dropdown-menu').addClass('show');
-            });
-
-            $('.nav-link.dropdown-toggle').mouseleave(function() {
-                $(this).removeClass('show');
-                $(this).next('.dropdown-menu').removeClass('show');
-            });
-
-            $('.dropdown-menu').mouseenter(function() {
-                $(this).addClass('show');
-            });
-
-            $('.dropdown-menu').mouseleave(function() {
-                $(this).removeClass('show');
-                $(this).prev('.dropdown-toggle').removeClass('show');
-            });
         });
     </script>
-
-
-
 </body>
 
 </html>

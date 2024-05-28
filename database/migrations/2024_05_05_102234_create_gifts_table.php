@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama_gift');
             $table->string('gambar_gift');
             $table->integer('poin_cost');
+            $table->integer('stock');
             $table->text('deskripsi');
             $table->timestamps();
         });

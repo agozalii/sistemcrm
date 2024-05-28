@@ -15,8 +15,7 @@
 
                     </button>
                 </div>
-
-                {{-- <div class="col-md-6">
+                <div class="col-md-6">
                     <form action="{{ route('member.index') }}" method="GET" class="form-inline float-right">
                         <a href="{{ route('member.index') }}" class="btn btn-link ml-2">
                             <i class="fas fa-sync-alt"></i>
@@ -26,8 +25,7 @@
                         <button type="submit" class="btn btn-primary">Cari</button>
 
                     </form>
-                </div> --}}
-
+                </div>
             </div>
 
             @if ($message = Session::get('success'))
@@ -37,15 +35,16 @@
             @endif
             <div style="overflow-x:auto;">
                 {{-- height:300px; --}}
-                <table class="table table-bordered table-striped" style="min-width:1500px; overflow-y: auto;">
+                <table id="example1" class="table table-bordered table-striped" style="min-width:1300px; overflow-y: auto;">
                     <thead>
                         {{-- class="sticky-top" --}}
                         <tr style="text-align: center">
                             <th>No</th>
-                            <th>Nama </th>
+                            <th style="width: 400px">Nama </th>
                             <th>Gambar </th>
                             <th>Poin Tukar</th>
-                            <th style="width: 300px">Deskripsi</th>
+                            <th>Stock</th>
+                            <th style="width: 400px">Deskripsi</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -60,6 +59,7 @@
                                 <td><img src="{{ asset('storage/gift/' . $x->gambar_gift) }}" alt="Gambar Gift"
                                         width="60"></td>
                                 <td>{{ $x->poin_cost }}</td>
+                                <td>{{ $x->stock }}</td>
                                 <td>{{ $x->deskripsi }}</td>
                                 <td>
                                     <button class="btn btn-info editGift" style="100px" data-id="{{ $x->id }}">
@@ -75,7 +75,7 @@
                     </tbody>
                 </table>
             </div>
-            {{-- <div class="d-flex justify-content-center" style="margin-top: 20px;">
+            <div class="d-flex justify-content-center" style="margin-top: 20px;">
                 <ul class="pagination">
                     <li class="page-item">
                         @if ($data->previousPageUrl())
@@ -96,12 +96,25 @@
             </div>
 
             <p class="text-center">Menampilkan {{ $data->firstItem() }} - {{ $data->lastItem() }}, dari total
-                {{ $data->total() }}</p> --}}
-
-
+                {{ $data->total() }}</p>
         </div>
         <div class="tampilData" style="display:none;"></div>
         <div class="tampilEditData" style="display:none;"></div>
+        {{-- <script>
+            $(document).ready(function () {
+                $('#example1').DataTable({
+                    dom: 'Blfrtip',
+                    buttons: [
+                        {
+                            extend: 'pdf',
+                            text: 'Print PDF',
+                            title: 'Laporan Data Gift',
+                        }
+                    ],
+                    lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
+                });
+            });
+        </script> --}}
 
         <script>
             $('#addDataGift').click(function(e) {

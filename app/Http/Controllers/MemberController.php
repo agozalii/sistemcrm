@@ -32,7 +32,7 @@ class MemberController extends Controller
     public function addMember()
     {
         return view("admin.modal.addMember", [
-            'title' => 'Tambah Data Produk',
+            'title' => 'Tambah Data Member',
         ]);
     }
 

@@ -11,6 +11,7 @@ use App\Http\Controllers\KritikSaranController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ManajerDashboardController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PoinController;
 use App\Http\Controllers\PoinLoyalitasController;
@@ -63,6 +64,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('/simpan-kritik-saran', [KritikSaranController::class, 'simpan'])->name('simpanKritikSaran');
     //end user
+    Route::post('/admin/transaksi/getPoin', [TransaksiController::class, 'getPoin'])->name('transaksi.getPoin');
 
     Route::group(['middleware' => ['cekUserLogin:admin']], function () {
         Route::resource('klasifikasigunung', KlasifikasiGunungController::class);
@@ -86,14 +88,13 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::resource('transaksi', TransaksiController::class);
 
-        Route::post('/admin/transaksi/getPoin', [TransaksiController::class, 'getPoin'])->name('transaksi.getPoin');
 
         // CRUD TRANSAKSI
         Route::get('/admin/addTransaksi', [TransaksiController::class, 'addTransaksi'])->name('addTransaksi');
         Route::POST('/admin/addDataTransaksi', [TransaksiController::class, 'store'])->name('addDataTransaksi');
         Route::get('/admin/editTransaksi/{id}', [TransaksiController::class, 'show'])->name('editTransaksi');
         Route::get('/admin/transaksi/view/{id}', [TransaksiController::class, 'view'])->name('transaksi.view');
-        Route::put('/admin/updateTransaksi/{id}', [TransaksiController::class, 'update'])->name('updateTransaksi');
+        Route::post('/admin/updateTransaksi/{id}', [TransaksiController::class, 'update'])->name('updateTransaksi');
         Route::get('/admin/deleteTransaksi/{id}', [TransaksiController::class, 'destroy'])->name('deleteTransaksi');
 
 
@@ -110,12 +111,18 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/admin/updateGift/{id}', [GiftController::class, 'update'])->name('updateGift');
         Route::get('/admin/deleteGift/{id}', [GiftController::class, 'destroy'])->name('deleteGift');
 
+        Route::resource('laporan', LaporanController::class);
+        Route::get('/admin/laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
+        Route::get('/admin/laporanklaim', [LaporanController::class, 'laporanklaim'])->name('laporanklaim');
+
+
 
 
         Route::resource('klaimpoin', KlaimPoinController::class);
         Route::get('/admin/klaim/klaimMember/{id}', [KlaimPoinController::class, 'update'])->name('klaim.klaimMember');
-        Route::resource('umpanbalik', UmpanBalikController::class);
-        Route::resource('laporan', LaporanController::class);
+        Route::get('/admin/klaim/rejectKlaim/{id}', [KlaimPoinController::class, 'reject'])->name('klaim.rejectKlaim');
+        Route::get('umpanbalik', [KritikSaranController::class, 'umpanbalik'])->name('umpanbalik');
+        Route::get('/admin/deleteKritiksaran/{id}', [KritikSaranController::class, 'destroy'])->name('deleteKritiksaran');        Route::resource('laporan', LaporanController::class);
     });
 
     Route::group(['middleware' => ['cekUserLogin:kasir']], function () {
@@ -126,10 +133,21 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/kasir/editProduk/{id}', [ProdukController::class, 'show'])->name('editProduk');
         Route::put('/kasir/updateData/{id}', [ProdukController::class, 'update'])->name('updateProduk');
         Route::get('/kasir/deleteProduk/{id}', [ProdukController::class, 'destroy'])->name('deleteProduk');
+
+        Route::get('/kasir/transaksi', [TransaksiController::class, 'index'])->name('transaksi.kasir');
+        Route::get('/kasir/transaksi/tambah', [TransaksiController::class, 'create'])->name('transaksi.tambah');
+        Route::POST('/kasir/transaksi/simpan', [TransaksiController::class, 'store'])->name('transaksi.simpan');
+        Route::get('/kasir/editTransaksi/{id}', [TransaksiController::class, 'show'])->name('editTransaksi');
+        Route::get('/kasir/transaksi/edit/{id}', [TransaksiController::class, 'edit'])->name('kasir.transaksi.edit');
+        Route::post('/kasir/transaksi/update/{id}', [TransaksiController::class, 'update'])->name('kasir.transaksi.update');
+        Route::get('/kasir/transaksi/show/{id}', [TransaksiController::class, 'view'])->name('transaksi.show');
+        Route::post('/kasir/updateTransaksi/{id}', [TransaksiController::class, 'update'])->name('updateTransaksi');
+        Route::get('/kasir/deleteTransaksi/{id}', [TransaksiController::class, 'destroy'])->name('deleteTransaksi');
     });
 
     Route::group(['middleware' => ['cekUserLogin:manajer']], function () {
-        Route::resource('laporan', LaporanController::class);
+        Route::get('/manajer/dashboard', [ManajerDashboardController::class, 'index'])->name('manajer.dashboard');
+
     });
 
     // Route::group(['middleware' => ['cekUserLogin:mem']], function(){

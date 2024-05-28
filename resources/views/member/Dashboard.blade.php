@@ -18,28 +18,28 @@
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="d-block w-100" src="{{ url('storage/aset/g1.jpeg') }}" alt="First slide">
-                <div class="carousel-caption d-none d-md-block">
+                <img class="d-block w-100" src="{{ url('storage/aset/foto1.jpg') }}" alt="First slide">
+                {{-- <div class="carousel-caption d-none d-md-block">
                     <h5>Slider One Item</h5>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime, nulla, tempore. Deserunt excepturi
                         quas vero.</p>
-                </div>
+                </div> --}}
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="{{ url('storage/aset/g1.jpeg') }}" alt="Second slide">
-                <div class="carousel-caption d-none d-md-block">
+                <img class="d-block w-100" src="{{ url('storage/aset/foto10.jpg') }}" alt="Second slide">
+                {{-- <div class="carousel-caption d-none d-md-block">
                     <h5>Slider One Item</h5>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime, nulla, tempore. Deserunt excepturi
                         quas vero.</p>
-                </div>
+                </div> --}}
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="{{ url('storage/aset/g1.jpeg') }}" alt="Third slide">
-                <div class="carousel-caption d-none d-md-block">
+                <img class="d-block w-100" src="{{ url('storage/aset/foto11.jpg') }}" alt="Third slide">
+                {{-- <div class="carousel-caption d-none d-md-block">
                     <h5>Slider One Item</h5>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime, nulla, tempore. Deserunt excepturi
                         quas vero.</p>
-                </div>
+                </div> --}}
             </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -71,7 +71,7 @@
     </div>
     @if ($gunungs->count() > 4) <!-- Tampilkan tombol lihat semua jika jumlah gunung melebihi 8 -->
         <div class="text-end"> <!-- Menggunakan text-end untuk menggeser tombol ke kanan -->
-            <a href="{{ url('/member/rekomendasi') }}" class="btn btn-secondary">Lihat Semua Gunung</a> <!-- Menggunakan kelas btn-secondary untuk warna abu-abu -->
+            <a href="{{ url('/member/rekomendasi') }}" class="btn btn-primary">Lihat Semua Gunung</a> <!-- Menggunakan kelas btn-secondary untuk warna abu-abu -->
         </div>
     @endif
 </div>
@@ -83,12 +83,8 @@
 
     <div class="about-us">
         <div class="container">
-            <h2>About Us</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam mattis, nulla vel luctus bibendum, metus dui
-                tristique lacus, eu cursus justo purus sit amet tortor. Mauris sed metus id eros interdum vehicula. Nunc
-                volutpat arcu eu tellus vulputate, vitae fermentum mi varius. In gravida nisi at ex lobortis, sed varius
-                ligula eleifend. Nullam laoreet, erat eu fermentum faucibus, odio magna feugiat ipsum, sed fringilla lectus
-                nulla vel lectus. Nulla sit amet semper lorem. Vivamus vitae
+            <h2>Tentang Kami</h2>
+            <p>Forester Jakal adalah sebuah toko yang menjual peralatan pendakian dengan merk Consina dan Forester.Forester jakal merupakan anak cabang dari perusahaan serupa yaitu Nomad Adventure. Sebagai salah satu dari empat cabang yang dimiliki oleh Nomad Adventure. Pada dasarnya, karena Forester Jakal merupakan perusahaan yang menjalin kerjasama konsinyasi dengan Consina dan Forester mereka tidak mempunyai visi misi sendiri dan berpegang pada visi misi dari 2 brand yang ada pada mereka yaitu Consina dan Forester.
         </div>
     </div>
 @endsection

@@ -34,18 +34,15 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label class="col-sm-5 col-form-label">Deskripsi</label>
+                        <label class="col-sm-5 col-form-label">Stock</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="deskripsi" name="deskripsi" value="{{$data->deskripsi}}">
+                            <input type="number" class="form-control" id="stock" name="stock" value="{{$data->stock}}">
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label class="col-sm-5 col-form-label">Status</label>
+                        <label class="col-sm-5 col-form-label">Deskripsi</label>
                         <div class="col-sm-7">
-                            <select name="status" id="">
-                                <option value="Menunggu" @if($data->status == 'Menunggu') selected @endif>Menunggu</option>
-                                <option value="Terklaim" @if($data->status == 'Terklaim') selected @endif>Terklaim</option>
-                            </select>
+                            <input type="text" class="form-control" id="deskripsi" name="deskripsi" value="{{$data->deskripsi}}">
                         </div>
                     </div>
                 </div>
