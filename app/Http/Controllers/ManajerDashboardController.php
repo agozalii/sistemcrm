@@ -20,6 +20,28 @@ class ManajerDashboardController extends Controller
         $tgl_awal = request('tgl_awal');
         $tgl_akhir = request('tgl_akhir');
 
+        $arrBulan = [
+            '01' => 'Januari',
+            '02' => 'Februari',
+            '03' => 'Maret',
+            '04' => 'April',
+            '05' => 'Mei',
+            '06' => 'Juni',
+            '07' => 'Juli',
+            '08' => 'Agustus',
+            '09' => 'September',
+            '10' => 'Oktober',
+            '11' => 'November',
+            '12' => 'Desember',
+        ];
+        $arrNilai = [
+            '1' => 'Sangat Kurang',
+            '2' => 'Kurang',
+            '3' => 'Cukup',
+            '4' => 'Baik',
+            '5' => 'Sangat Baik'
+        ];
+
         if ($tgl_awal && $tgl_akhir) {
             $gifts = GiftModel::with('klaimPoins')
                 ->whereBetween('created_at', [$tgl_awal, $tgl_akhir])
@@ -50,12 +72,39 @@ class ManajerDashboardController extends Controller
             $kritikSarans = KritikSaranModel::query()
                 ->whereBetween('created_at', [$tgl_awal, $tgl_akhir])
                 ->orderBy('created_at', 'desc')
-                ->limit(10)
                 ->get();
+
+            $pertambahan_member = [];
+
+            foreach ($arrBulan as $key => $value) {
+                $member = User::query()
+                    ->where('role', 'manajer')
+                    ->whereMonth('created_at', $key)
+                    ->whereBetween('created_at', [$tgl_awal, $tgl_akhir])
+                    ->count();
+
+                $pertambahan_member[] = [
+                    'bulan' => $key,
+                    'nama_bulan' => $value,
+                    'jumlah' => $member
+                ];
+            }
+
+            $kepuasan = [];
+            foreach ($arrNilai as $key => $value) {
+                $kritikSaran = KritikSaranModel::query()
+                    ->where('kepuasan', $key)
+                    ->count();
+
+                $kepuasan[] = [
+                    'nama_rating' => $value,
+                    'jumlah' => $kritikSaran
+                ];
+            }
         } else {
             $gifts = GiftModel::with('klaimPoins')->get();
 
-            $giftChart = [];
+            $grafikGift = [];
             foreach ($gifts as $gift) {
                 $grafikGift[] = [
                     'nama_gift' => $gift->nama_gift,
@@ -78,17 +127,44 @@ class ManajerDashboardController extends Controller
 
             $kritikSarans = KritikSaranModel::query()
                 ->orderBy('created_at', 'desc')
-                ->limit(10)
                 ->get();
-        }
-        // dd($topUser);
 
+            $pertambahan_member = [];
+
+
+            foreach ($arrBulan as $key => $value) {
+                $member = User::query()
+                    ->where('role', 'manajer')
+                    ->whereMonth('created_at', $key)
+                    ->count();
+
+                $pertambahan_member[] = [
+                    'bulan' => $key,
+                    'nama_bulan' => $value,
+                    'jumlah' => $member
+                ];
+            }
+
+            $kepuasan = [];
+            foreach ($arrNilai as $key => $value) {
+                $kritikSaran = KritikSaranModel::query()
+                    ->where('kepuasan', $key)
+                    ->count();
+
+                $kepuasan[] = [
+                    'nama_rating' => $value,
+                    'jumlah' => $kritikSaran
+                ];
+            }
+        }
         return view('manajer.dashboard', [
             'tgl_awal' => $tgl_awal,
             'tgl_akhir' => $tgl_akhir,
             'grafikGift' => $grafikGift,
             'memberLoyal' => $memberLoyal,
+            'kepuasan' => $kepuasan,
             'kritikSarans' => $kritikSarans,
+            'pertambahan_member' => $pertambahan_member,
             'user' => auth()->user()
         ]);
     }
